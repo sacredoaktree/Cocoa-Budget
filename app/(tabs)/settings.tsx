@@ -1,11 +1,14 @@
-import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { useTheme } from '../../src/theme';
 import { Typography } from '../../src/theme/typography';
 import { Shadow } from '../../src/theme/spacing';
 import { useSettingsStore } from '../../src/store/useSettingsStore';
+import { CurrencySettingsSheet } from '../../src/components/features/CurrencySettingsSheet';
+import { LanguageSettingsSheet } from '../../src/components/features/LanguageSettingsSheet';
 
 interface SettingsRowProps {
   icon: string;
@@ -55,6 +58,8 @@ function SectionCard({ children }: { children: React.ReactNode }) {
 export default function SettingsScreen() {
   const { colors } = useTheme();
   const { settings } = useSettingsStore();
+  const [showCurrency, setShowCurrency] = useState(false);
+  const [showLanguage, setShowLanguage] = useState(false);
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]} edges={['top']}>
@@ -145,16 +150,35 @@ export default function SettingsScreen() {
         </Text>
         <SectionCard>
           <SettingsRow icon="pie-chart-outline" iconBg="#D94F3D" label="Budget" />
-          <SettingsRow icon="card-outline" iconBg="#4A7FD4" label="Saving Goals" />
+          <SettingsRow
+            icon="trophy-outline"
+            iconBg="#4A7FD4"
+            label="Savings Goals"
+            onPress={() => router.push('/features/goals')}
+          />
+          <SettingsRow
+            icon="trending-up-outline"
+            iconBg="#7C5CBF"
+            label="Net Worth Timeline"
+            onPress={() => router.push('/features/net-worth-timeline')}
+          />
+          <SettingsRow
+            icon="people-outline"
+            iconBg="#2E9E6B"
+            label="Bill Splitting"
+            onPress={() => router.push('/features/bill-split')}
+          />
+          <SettingsRow
+            icon="calculator-outline"
+            iconBg="#D94F3D"
+            label="Debt Payoff Planner"
+            onPress={() => router.push('/features/debt-planner')}
+          />
           <SettingsRow
             icon="refresh-circle-outline"
             iconBg="#2AADCC"
-            label="Recurring"
-          />
-          <SettingsRow
-            icon="alarm-outline"
-            iconBg="#E84E8A"
-            label="Reminders"
+            label="Subscription Audit"
+            onPress={() => router.push('/features/subscription-audit')}
             isLast
           />
         </SectionCard>
@@ -174,6 +198,7 @@ export default function SettingsScreen() {
             iconBg="#D4AF37"
             label="Base Currency"
             value={settings.currency}
+            onPress={() => setShowCurrency(true)}
           />
           <SettingsRow
             icon="moon-outline"
@@ -192,6 +217,7 @@ export default function SettingsScreen() {
             iconBg="#4A90D9"
             label="Language"
             value="English"
+            onPress={() => setShowLanguage(true)}
             isLast
           />
         </SectionCard>
@@ -272,6 +298,16 @@ export default function SettingsScreen() {
 
         <View style={{ height: 40 }} />
       </ScrollView>
+
+      {/* Currency Sheet */}
+      <Modal visible={showCurrency} animationType="slide" presentationStyle="pageSheet">
+        <CurrencySettingsSheet onClose={() => setShowCurrency(false)} />
+      </Modal>
+
+      {/* Language Sheet */}
+      <Modal visible={showLanguage} animationType="slide" presentationStyle="pageSheet">
+        <LanguageSettingsSheet onClose={() => setShowLanguage(false)} />
+      </Modal>
     </SafeAreaView>
   );
 }

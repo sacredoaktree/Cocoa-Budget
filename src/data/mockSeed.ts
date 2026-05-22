@@ -462,4 +462,5 @@ export const DEFAULT_SETTINGS = {
   totalTransactionCount: 634,
   totalDaysUsed: 286,
   streakDays: 5,
+  privacyMode: false,
 };

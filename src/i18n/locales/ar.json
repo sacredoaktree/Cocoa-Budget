@@ -1,0 +1,230 @@
+{
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "close": "إغلاق",
+    "back": "رجوع",
+    "add": "إضافة",
+    "confirm": "تأكيد",
+    "loading": "جارٍ التحميل...",
+    "error": "حدث خطأ ما",
+    "retry": "إعادة المحاولة",
+    "noData": "لا توجد بيانات بعد",
+    "ok": "حسناً"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "accounts": "الحسابات",
+    "transactions": "المعاملات",
+    "budget": "الميزانية",
+    "settings": "الإعدادات"
+  },
+  "home": {
+    "greeting_morning": "صباح الخير",
+    "greeting_afternoon": "مساء الخير",
+    "greeting_evening": "مساء النور",
+    "periods": {
+      "today": "اليوم",
+      "week": "هذا الأسبوع",
+      "month": "هذا الشهر",
+      "last": "الشهر الماضي"
+    },
+    "expenses": "المصروفات",
+    "income": "الدخل",
+    "balance": "الرصيد",
+    "weeklyDigest": "ملخص الأسبوع الماضي",
+    "digestSpent": "أنفقت {{amount}} الأسبوع الماضي",
+    "digestTopCategory": "الأعلى: {{category}}",
+    "digestVsLastWeek_more": "↑ {{pct}}% أكثر من الأسبوع السابق",
+    "digestVsLastWeek_less": "↓ {{pct}}% أقل من الأسبوع السابق"
+  },
+  "accounts": {
+    "title": "الحسابات",
+    "netWorth": "صافي الثروة",
+    "assets": "الأصول",
+    "liabilities": "الالتزامات",
+    "debit": "مدين",
+    "credit": "ائتمان",
+    "investment": "استثمار",
+    "loan": "قرض",
+    "balance": "رصيد",
+    "addAccount": "إضافة حساب",
+    "noAccounts": "لا توجد حسابات بعد. اضغط + لإضافة حساب.",
+    "types": {
+      "checking": "حساب جاري",
+      "savings": "حساب توفير",
+      "credit": "بطاقة ائتمان",
+      "cash": "نقد",
+      "digital": "محفظة رقمية",
+      "loan": "قرض",
+      "investment": "استثمار",
+      "stock": "أسهم",
+      "crypto": "عملات مشفرة"
+    }
+  },
+  "transactions": {
+    "title": "المعاملات",
+    "record": "تسجيل",
+    "stats": "إحصائيات",
+    "noTransactions": "لا توجد معاملات بعد",
+    "income": "دخل",
+    "expense": "مصروف",
+    "transfer": "تحويل",
+    "balance": "رصيد",
+    "addTransaction": "إضافة معاملة",
+    "category": "الفئة",
+    "account": "الحساب",
+    "note": "إضافة ملاحظة...",
+    "trends": "الاتجاهات",
+    "categories": "الفئات",
+    "overview": "نظرة عامة",
+    "in": "وارد",
+    "out": "صادر"
+  },
+  "budget": {
+    "title": "الميزانية",
+    "totalSpent": "إجمالي الإنفاق",
+    "totalBudget": "إجمالي الميزانية",
+    "remaining": "{{amount}} متبقية",
+    "overBy": "تجاوز بمقدار {{amount}}",
+    "noBudgets": "لم يتم تعيين ميزانية لهذا الشهر",
+    "status": {
+      "ok": "جيد",
+      "warning": "⚠ قريب",
+      "over": "تجاوز"
+    }
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "profile": {
+      "premiumMember": "عضو مميز",
+      "currentStreak": "السلسلة الحالية",
+      "totalDays": "إجمالي الأيام",
+      "transactions": "المعاملات"
+    },
+    "sections": {
+      "management": "الإدارة",
+      "finance": "المالية",
+      "preferences": "التفضيلات",
+      "data": "البيانات",
+      "security": "الأمان",
+      "about": "حول التطبيق"
+    },
+    "items": {
+      "ledger": "مدير دفتر الأستاذ",
+      "accountManager": "مدير الحسابات",
+      "categoryManager": "مدير الفئات",
+      "shareManager": "مدير المشاركة",
+      "budget": "الميزانية",
+      "savingGoals": "أهداف الادخار",
+      "recurring": "المتكررة",
+      "reminders": "التذكيرات",
+      "currency": "العملة الأساسية",
+      "darkMode": "الوضع الداكن",
+      "language": "اللغة",
+      "export": "تصدير / استيراد",
+      "backups": "النسخ الاحتياطية",
+      "transferData": "نقل البيانات",
+      "appLock": "قفل التطبيق",
+      "biometric": "المصادقة البيومترية",
+      "rate": "تقييم التطبيق",
+      "faq": "الأسئلة الشائعة",
+      "contact": "اتصل بنا",
+      "privacyMode": "وضع الخصوصية",
+      "billSplit": "تقسيم الفاتورة",
+      "netWorthTimeline": "تاريخ صافي الثروة",
+      "subscriptionAudit": "مراجعة الاشتراكات"
+    },
+    "darkModeValues": {
+      "on": "تشغيل",
+      "off": "إيقاف",
+      "auto": "تلقائي"
+    },
+    "backupsInactive": "غير نشط"
+  },
+  "addAccount": {
+    "title": "إضافة حساب",
+    "groups": {
+      "debit": "مدين",
+      "credit": "ائتمان",
+      "borrowLend": "اقتراض / إقراض",
+      "invest": "استثمار"
+    },
+    "form": {
+      "name": "الاسم",
+      "note": "ملاحظة",
+      "currency": "العملة",
+      "openingBalance": "الرصيد الافتتاحي",
+      "chartColor": "لون الرسم البياني",
+      "countInAsset": "احتساب في الأصول"
+    },
+    "placeholder": {
+      "name": "مثال: بنك الراجحي",
+      "note": "آخر 4 أرقام، مذكرة..."
+    }
+  },
+  "addTransaction": {
+    "title": "إضافة معاملة"
+  },
+  "accountDetail": {
+    "transactions": "المعاملات",
+    "day": "يوم",
+    "month": "شهر",
+    "noTransactions": "لا توجد معاملات بعد",
+    "creditLimit": "حد الائتمان: {{limit}} · المتاح: {{available}}"
+  },
+  "goals": {
+    "title": "أهداف الادخار",
+    "addGoal": "إضافة هدف",
+    "noGoals": "لا توجد أهداف ادخار بعد",
+    "target": "الهدف",
+    "saved": "المدخر",
+    "remaining": "{{amount}} متبقية",
+    "monthlyNeeded": "{{amount}}/شهر مطلوب",
+    "completed": "تم تحقيق الهدف! 🎉",
+    "deadline": "الموعد النهائي: {{date}}"
+  },
+  "billSplit": {
+    "title": "تقسيم الفاتورة",
+    "owesYou": "مدين لك",
+    "youOwe": "أنت مدين",
+    "settled": "مسوّى",
+    "addEntry": "إضافة إدخال",
+    "markSettled": "تحديد كمسوّى",
+    "noEntries": "لا توجد إدخالات بعد"
+  },
+  "debtPlanner": {
+    "title": "مخطط سداد الديون",
+    "monthsToPayoff": "أشهر حتى السداد",
+    "totalInterest": "إجمالي الفوائد",
+    "payoffDate": "تاريخ السداد",
+    "snowball": "طريقة كرة الثلج",
+    "avalanche": "طريقة الانهيار",
+    "monthlyPayment": "الدفعة الشهرية",
+    "interestRate": "معدل الفائدة السنوي"
+  },
+  "subscriptionAudit": {
+    "title": "مراجعة الاشتراكات",
+    "monthlyTotal": "الإجمالي الشهري",
+    "yearlyTotal": "الإجمالي السنوي",
+    "unusedLabel": "غير مستخدم",
+    "noSubscriptions": "لا توجد اشتراكات نشطة"
+  },
+  "netWorthTimeline": {
+    "title": "تاريخ صافي الثروة",
+    "noHistory": "لا يوجد تاريخ كافٍ بعد. تفقد الشهر القادم.",
+    "change": "مقارنة بالشهر الماضي"
+  },
+  "currency": {
+    "title": "العملة الأساسية",
+    "refreshRates": "تحديث الأسعار المباشرة",
+    "fetching": "جارٍ جلب الأسعار…",
+    "neverSynced": "لم تتم المزامنة قط",
+    "updated": "تم التحديث {{date}} · عبر frankfurter.app (مجاني)"
+  },
+  "language": {
+    "title": "اللغة"
+  }
+}

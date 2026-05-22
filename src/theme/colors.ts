@@ -55,7 +55,7 @@ export const LightColors = {
   statusBar: 'dark',
 } as const;
 
-export const DarkColors: typeof LightColors = {
+export const DarkColors: { [K in keyof typeof LightColors]: string } = {
   primary: '#C8956A',
   accent: '#E8B98A',
   gold: '#E8CC6A',
@@ -104,4 +104,4 @@ export const DarkColors: typeof LightColors = {
   statusBar: 'light',
 };
 
-export type Colors = typeof LightColors;
+export type Colors = { [K in keyof typeof LightColors]: string };

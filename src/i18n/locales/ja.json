@@ -1,0 +1,230 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "キャンセル",
+    "edit": "編集",
+    "delete": "削除",
+    "close": "閉じる",
+    "back": "戻る",
+    "add": "追加",
+    "confirm": "確認",
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "retry": "再試行",
+    "noData": "データがありません",
+    "ok": "OK"
+  },
+  "nav": {
+    "home": "ホーム",
+    "accounts": "口座",
+    "transactions": "取引",
+    "budget": "予算",
+    "settings": "設定"
+  },
+  "home": {
+    "greeting_morning": "おはようございます",
+    "greeting_afternoon": "こんにちは",
+    "greeting_evening": "こんばんは",
+    "periods": {
+      "today": "今日",
+      "week": "今週",
+      "month": "今月",
+      "last": "先月"
+    },
+    "expenses": "支出",
+    "income": "収入",
+    "balance": "残高",
+    "weeklyDigest": "先週のまとめ",
+    "digestSpent": "先週は{{amount}}を使いました",
+    "digestTopCategory": "トップ: {{category}}",
+    "digestVsLastWeek_more": "↑ 先週より{{pct}}%増加",
+    "digestVsLastWeek_less": "↓ 先週より{{pct}}%減少"
+  },
+  "accounts": {
+    "title": "口座",
+    "netWorth": "純資産",
+    "assets": "資産",
+    "liabilities": "負債",
+    "debit": "デビット",
+    "credit": "クレジット",
+    "investment": "投資",
+    "loan": "ローン",
+    "balance": "残高",
+    "addAccount": "口座を追加",
+    "noAccounts": "口座がまだありません。+をタップして追加してください。",
+    "types": {
+      "checking": "当座預金",
+      "savings": "普通預金",
+      "credit": "クレジットカード",
+      "cash": "現金",
+      "digital": "電子ウォレット",
+      "loan": "ローン",
+      "investment": "投資",
+      "stock": "株式",
+      "crypto": "仮想通貨"
+    }
+  },
+  "transactions": {
+    "title": "取引",
+    "record": "記録",
+    "stats": "統計",
+    "noTransactions": "取引がまだありません",
+    "income": "収入",
+    "expense": "支出",
+    "transfer": "振替",
+    "balance": "残高",
+    "addTransaction": "取引を追加",
+    "category": "カテゴリ",
+    "account": "口座",
+    "note": "メモを追加...",
+    "trends": "トレンド",
+    "categories": "カテゴリ",
+    "overview": "概要",
+    "in": "入金",
+    "out": "出金"
+  },
+  "budget": {
+    "title": "予算",
+    "totalSpent": "合計支出",
+    "totalBudget": "予算合計",
+    "remaining": "{{amount}} 残り",
+    "overBy": "{{amount}} 超過",
+    "noBudgets": "今月の予算が設定されていません",
+    "status": {
+      "ok": "OK",
+      "warning": "⚠ 注意",
+      "over": "超過"
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "profile": {
+      "premiumMember": "プレミアム会員",
+      "currentStreak": "現在の連続記録",
+      "totalDays": "合計日数",
+      "transactions": "取引"
+    },
+    "sections": {
+      "management": "管理",
+      "finance": "財務",
+      "preferences": "設定",
+      "data": "データ",
+      "security": "セキュリティ",
+      "about": "アプリについて"
+    },
+    "items": {
+      "ledger": "元帳管理",
+      "accountManager": "口座管理",
+      "categoryManager": "カテゴリ管理",
+      "shareManager": "共有管理",
+      "budget": "予算",
+      "savingGoals": "貯蓄目標",
+      "recurring": "定期支出",
+      "reminders": "リマインダー",
+      "currency": "基準通貨",
+      "darkMode": "ダークモード",
+      "language": "言語",
+      "export": "エクスポート / インポート",
+      "backups": "バックアップ",
+      "transferData": "データ転送",
+      "appLock": "アプリロック",
+      "biometric": "生体認証",
+      "rate": "アプリを評価する",
+      "faq": "よくある質問",
+      "contact": "お問い合わせ",
+      "privacyMode": "プライバシーモード",
+      "billSplit": "割り勘",
+      "netWorthTimeline": "純資産の推移",
+      "subscriptionAudit": "サブスクリプション管理"
+    },
+    "darkModeValues": {
+      "on": "オン",
+      "off": "オフ",
+      "auto": "自動"
+    },
+    "backupsInactive": "無効"
+  },
+  "addAccount": {
+    "title": "口座を追加",
+    "groups": {
+      "debit": "デビット",
+      "credit": "クレジット",
+      "borrowLend": "借入 / 貸付",
+      "invest": "投資"
+    },
+    "form": {
+      "name": "名前",
+      "note": "メモ",
+      "currency": "通貨",
+      "openingBalance": "開始残高",
+      "chartColor": "グラフの色",
+      "countInAsset": "資産に含める"
+    },
+    "placeholder": {
+      "name": "例: 三菱UFJ銀行",
+      "note": "下4桁、メモ..."
+    }
+  },
+  "addTransaction": {
+    "title": "取引を追加"
+  },
+  "accountDetail": {
+    "transactions": "取引",
+    "day": "日",
+    "month": "月",
+    "noTransactions": "取引がまだありません",
+    "creditLimit": "クレジット限度額: {{limit}} · 利用可能: {{available}}"
+  },
+  "goals": {
+    "title": "貯蓄目標",
+    "addGoal": "目標を追加",
+    "noGoals": "貯蓄目標がまだありません",
+    "target": "目標額",
+    "saved": "貯蓄済み",
+    "remaining": "あと{{amount}}",
+    "monthlyNeeded": "月{{amount}}が必要",
+    "completed": "目標達成！ 🎉",
+    "deadline": "期限: {{date}}"
+  },
+  "billSplit": {
+    "title": "割り勘",
+    "owesYou": "があなたに借りています",
+    "youOwe": "あなたが借りています",
+    "settled": "精算済み",
+    "addEntry": "追加",
+    "markSettled": "精算済みにする",
+    "noEntries": "エントリーがまだありません"
+  },
+  "debtPlanner": {
+    "title": "返済プランナー",
+    "monthsToPayoff": "完済までの月数",
+    "totalInterest": "総利息",
+    "payoffDate": "完済予定日",
+    "snowball": "スノーボール法",
+    "avalanche": "アバランシェ法",
+    "monthlyPayment": "月次返済額",
+    "interestRate": "年利"
+  },
+  "subscriptionAudit": {
+    "title": "サブスクリプション管理",
+    "monthlyTotal": "月次合計",
+    "yearlyTotal": "年次合計",
+    "unusedLabel": "未使用",
+    "noSubscriptions": "有効なサブスクリプションはありません"
+  },
+  "netWorthTimeline": {
+    "title": "純資産の推移",
+    "noHistory": "履歴がまだ不十分です。来月また確認してください。",
+    "change": "先月比"
+  },
+  "currency": {
+    "title": "基準通貨",
+    "refreshRates": "レートを更新",
+    "fetching": "レートを取得中…",
+    "neverSynced": "未同期",
+    "updated": "{{date}} 更新 · frankfurter.app 経由（無料）"
+  },
+  "language": {
+    "title": "言語"
+  }
+}

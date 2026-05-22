@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -16,8 +16,10 @@ import { useTransactionStore } from '../../src/store/useTransactionStore';
 import { useSettingsStore } from '../../src/store/useSettingsStore';
 import { getCategoriesByType } from '../../src/data/categories';
 import { CategoryCard } from '../../src/components/CategoryCard';
-import { currentMonth } from '../../src/utils/date';
+import { PrivacyToggle } from '../../src/components/ui/PrivacyToggle';
+import { currentMonth, prevMonth } from '../../src/utils/date';
 import { Category } from '../../src/types';
+import { startOfWeek, endOfWeek, subWeeks, isWithinInterval, parseISO } from 'date-fns';
 
 type Period = 'today' | 'week' | 'month' | 'last';
 
@@ -42,6 +44,52 @@ function fmtAmount(cents: number): string {
   });
 }
 
+function useWeeklyDigest(sym: string) {
+  const transactions = useTransactionStore((s) => s.transactions);
+  const { settings, updateSettings } = useSettingsStore();
+
+  const now = new Date();
+  const isMonday = now.getDay() === 1;
+  const thisWeekStart = startOfWeek(now, { weekStartsOn: 1 });
+  const lastWeekStart = subWeeks(thisWeekStart, 1);
+  const lastWeekEnd = endOfWeek(lastWeekStart, { weekStartsOn: 1 });
+  const twoWeeksAgoStart = subWeeks(lastWeekStart, 1);
+  const twoWeeksAgoEnd = endOfWeek(twoWeeksAgoStart, { weekStartsOn: 1 });
+
+  const thisWeekKey = thisWeekStart.toISOString().split('T')[0];
+  const dismissed = (settings as any).lastDigestDismissedWeek === thisWeekKey;
+
+  const digest = useMemo(() => {
+    const lastWeekTxs = transactions.filter(
+      (t) =>
+        t.type === 'expense' &&
+        !t.isDeleted &&
+        isWithinInterval(parseISO(t.date), { start: lastWeekStart, end: lastWeekEnd })
+    );
+    const prevWeekTxs = transactions.filter(
+      (t) =>
+        t.type === 'expense' &&
+        !t.isDeleted &&
+        isWithinInterval(parseISO(t.date), { start: twoWeeksAgoStart, end: twoWeeksAgoEnd })
+    );
+    const spent = lastWeekTxs.reduce((s, t) => s + t.amount, 0);
+    const prevSpent = prevWeekTxs.reduce((s, t) => s + t.amount, 0);
+    const catMap: Record<string, number> = {};
+    lastWeekTxs.forEach((t) => {
+      catMap[t.categoryId] = (catMap[t.categoryId] ?? 0) + t.amount;
+    });
+    const topCat = Object.entries(catMap).sort((a, b) => b[1] - a[1])[0];
+    const delta = prevSpent > 0 ? ((spent - prevSpent) / prevSpent) * 100 : 0;
+    const txCount = lastWeekTxs.length;
+    return { spent, prevSpent, topCat: topCat?.[0] ?? null, delta, txCount };
+  }, [transactions]);
+
+  const dismiss = () => updateSettings({ lastDigestDismissedWeek: thisWeekKey } as any);
+
+  const shouldShow = isMonday && !dismissed && digest.txCount > 0;
+  return { shouldShow, digest, dismiss, sym };
+}
+
 export default function HomeScreen() {
   const { colors } = useTheme();
   const { settings } = useSettingsStore();
@@ -50,10 +98,14 @@ export default function HomeScreen() {
 
   const sym = settings.currencySymbol;
   const month = currentMonth();
+  const lastMonth = prevMonth(month);
 
   const spendByCategory = useTransactionStore((s) => s.getSpendByCategory(month));
   const monthlyIncome = useTransactionStore((s) => s.getMonthlyIncome(month));
   const monthlyExpense = useTransactionStore((s) => s.getMonthlyExpense(month));
+  const lastMonthExpense = useTransactionStore((s) => s.getMonthlyExpense(lastMonth));
+
+  const { shouldShow: showDigest, digest, dismiss: dismissDigest } = useWeeklyDigest(sym);
 
   const expenseCategories = getCategoriesByType('expense');
   const incomeCategories = getCategoriesByType('income');
@@ -100,21 +152,52 @@ export default function HomeScreen() {
             {settings.displayName} 👋
           </Text>
         </View>
-        <TouchableOpacity
-          style={[styles.iconBtn, { backgroundColor: colors.card }, Shadow.card]}
-        >
-          <Ionicons
-            name="notifications-outline"
-            size={22}
-            color={colors.textPrimary}
-          />
-        </TouchableOpacity>
+        <View style={styles.headerActions}>
+          <View style={[styles.iconBtn, { backgroundColor: colors.card }, Shadow.card]}>
+            <PrivacyToggle size={22} />
+          </View>
+        </View>
       </View>
 
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scroll}
       >
+        {/* Weekly Digest card (Mondays only) */}
+        {showDigest && (
+          <View style={[styles.digestCard, { backgroundColor: colors.card, ...Shadow.raised }]}>
+            <View style={styles.digestTop}>
+              <View style={[styles.digestIcon, { backgroundColor: colors.accent + '20' }]}>
+                <Ionicons name="bar-chart-outline" size={18} color={colors.accent} />
+              </View>
+              <View style={{ flex: 1, marginLeft: 10 }}>
+                <Text style={[Typography.body2Semi, { color: colors.textPrimary }]}>Last Week Summary</Text>
+                <Text style={[Typography.caption, { color: colors.textSecondary }]}>
+                  You spent {sym}{fmtAmount(digest.spent)} across {digest.txCount} transactions
+                </Text>
+              </View>
+              <TouchableOpacity onPress={dismissDigest}>
+                <Ionicons name="close" size={18} color={colors.textTertiary} />
+              </TouchableOpacity>
+            </View>
+            {digest.prevSpent > 0 && (
+              <View style={styles.digestFooter}>
+                <Ionicons
+                  name={digest.delta <= 0 ? 'trending-down-outline' : 'trending-up-outline'}
+                  size={14}
+                  color={digest.delta <= 0 ? colors.income : colors.expense}
+                />
+                <Text style={[Typography.captionSemi, {
+                  color: digest.delta <= 0 ? colors.income : colors.expense,
+                  marginLeft: 4,
+                }]}>
+                  {Math.abs(digest.delta).toFixed(0)}% {digest.delta <= 0 ? 'less' : 'more'} than the previous week
+                </Text>
+              </View>
+            )}
+          </View>
+        )}
+
         {/* Period selector */}
         <ScrollView
           horizontal
@@ -288,6 +371,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 12,
   },
+  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   iconBtn: {
     width: 42,
     height: 42,
@@ -295,6 +379,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  digestCard: {
+    marginHorizontal: 16,
+    borderRadius: 14,
+    padding: 14,
+    marginBottom: 12,
+  },
+  digestTop: { flexDirection: 'row', alignItems: 'center' },
+  digestIcon: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
+  digestFooter: { flexDirection: 'row', alignItems: 'center', marginTop: 8, marginLeft: 46 },
   scroll: { paddingBottom: 20 },
   periodRow: { marginBottom: 16 },
   periodChip: {

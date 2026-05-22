@@ -114,6 +114,15 @@ export interface AppSettings {
   totalTransactionCount: number;
   totalDaysUsed: number;
   streakDays: number;
+  privacyMode: boolean;
+}
+
+// ─── Exchange Rate ────────────────────────────────────────────────────────
+export interface ExchangeRate {
+  from: string;      // e.g. "USD"
+  to: string;        // e.g. "PHP"
+  rate: number;      // e.g. 56.5
+  updatedAt: string; // ISO 8601
 }
 
 // ─── Computed helpers ────────────────────────────────────────────────────
@@ -146,4 +155,39 @@ export interface DailyTotal {
   date: string;
   income: number;
   expense: number;
+}
+
+// ─── Savings Goal ────────────────────────────────────────────────────────
+export interface SavingsGoal {
+  id: string;
+  name: string;
+  icon: string;
+  color: string;
+  targetAmount: number;     // cents
+  currentAmount: number;    // cents (manually set or from linked account)
+  deadline: string;         // YYYY-MM-DD
+  accountId?: string;
+  isCompleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// ─── Net Worth Snapshot ──────────────────────────────────────────────────
+export interface NetWorthSnapshot {
+  id: string;
+  date: string;             // YYYY-MM
+  amount: number;           // cents
+  assets: number;
+  liabilities: number;
+}
+
+// ─── Bill Split Entry ────────────────────────────────────────────────────
+export interface SplitEntry {
+  id: string;
+  person: string;
+  amount: number;           // cents — positive = they owe you, negative = you owe them
+  description: string;
+  date: string;
+  isSettled: boolean;
+  createdAt: string;
 }
