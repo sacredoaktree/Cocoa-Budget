@@ -9,6 +9,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       '@shared': path.resolve(__dirname, '../src'),
     },
+    // Always resolve node_modules from web/ so shared ../src/ files find
+    // packages like zustand, date-fns installed in web/node_modules.
+    modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
   },
   esbuild: {
     // Inline tsconfig so esbuild never walks up to the root Expo tsconfig.json
