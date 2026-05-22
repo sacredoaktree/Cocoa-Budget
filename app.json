@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Cocoa Budget",
+    "slug": "cocoa-budget",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "scheme": "cocoa-budget",
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow Cocoa Budget to use Face ID for privacy lock."
+        }
+      ]
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.cocoa.budget"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#3D2B1F",
+        "foregroundImage": "./assets/icon.png"
+      },
+      "package": "com.cocoa.budget"
+    },
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
