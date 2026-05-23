@@ -11,6 +11,7 @@ import NetWorth from './pages/NetWorth';
 import BillSplit from './pages/BillSplit';
 import DebtPlanner from './pages/DebtPlanner';
 import SubscriptionAudit from './pages/SubscriptionAudit';
+import Analytics from './pages/Analytics';
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/bill-split" element={<BillSplit />} />
           <Route path="/debt-planner" element={<DebtPlanner />} />
           <Route path="/subscription-audit" element={<SubscriptionAudit />} />
+          <Route path="/analytics" element={<Analytics />} />
         </Route>
       </Routes>
     </BrowserRouter>

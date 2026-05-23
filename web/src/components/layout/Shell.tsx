@@ -8,6 +8,7 @@ import {
   Settings,
   Eye,
   EyeOff,
+  BarChart2,
 } from 'lucide-react';
 import { useSettingsStore } from '@shared/store/useSettingsStore';
 import QuickAdd from '../QuickAdd';
@@ -23,6 +24,7 @@ const navItems: NavItem[] = [
   { to: '/accounts',    label: 'Accounts',     icon: <Wallet size={20} /> },
   { to: '/transactions',label: 'Transactions', icon: <Receipt size={20} /> },
   { to: '/budget',      label: 'Budget',       icon: <PieChart size={20} /> },
+  { to: '/analytics',   label: 'Analytics',    icon: <BarChart2 size={20} /> },
   { to: '/settings',    label: 'Settings',     icon: <Settings size={20} /> },
 ];
 
