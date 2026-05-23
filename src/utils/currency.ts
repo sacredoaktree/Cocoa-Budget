@@ -1,3 +1,32 @@
+export const CURRENCY_SYMBOLS: Record<string, string> = {
+  PHP: '₱',
+  USD: '$',
+  EUR: '€',
+  GBP: '£',
+  JPY: '¥',
+  SGD: 'S$',
+  AUD: 'A$',
+  CAD: 'C$',
+  HKD: 'HK$',
+  MYR: 'RM',
+  THB: '฿',
+  IDR: 'Rp',
+  KRW: '₩',
+  CNY: '¥',
+  INR: '₹',
+  CHF: 'Fr',
+  NZD: 'NZ$',
+  SEK: 'kr',
+  NOK: 'kr',
+  DKK: 'kr',
+  AED: 'د.إ',
+  SAR: '﷼',
+};
+
+export function symbolForCurrency(code: string): string {
+  return CURRENCY_SYMBOLS[code] ?? code;
+}
+
 export function formatCurrency(
   amountInCents: number,
   symbol = '₱',

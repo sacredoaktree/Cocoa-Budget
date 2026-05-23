@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { Account } from '../types';
-import { MOCK_ACCOUNTS } from '../data/mockSeed';
 
 interface AccountStore {
   accounts: Account[];
@@ -16,7 +15,7 @@ interface AccountStore {
 }
 
 export const useAccountStore = create<AccountStore>((set, get) => ({
-  accounts: MOCK_ACCOUNTS,
+  accounts: [],
 
   addAccount: (account) =>
     set((s) => ({ accounts: [...s.accounts, account] })),

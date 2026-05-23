@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { Subscription } from '../types';
-import { MOCK_SUBSCRIPTIONS } from '../data/mockSeed';
 
 interface SubscriptionStore {
   subscriptions: Subscription[];
@@ -12,7 +11,7 @@ interface SubscriptionStore {
 }
 
 export const useSubscriptionStore = create<SubscriptionStore>((set, get) => ({
-  subscriptions: MOCK_SUBSCRIPTIONS,
+  subscriptions: [],
 
   addSubscription: (sub) =>
     set((s) => ({ subscriptions: [sub, ...s.subscriptions] })),

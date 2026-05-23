@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { Budget, BudgetWithSpent } from '../types';
-import { MOCK_BUDGETS } from '../data/mockSeed';
 import { SYSTEM_CATEGORIES } from '../data/categories';
 
 interface BudgetStore {
@@ -14,7 +13,7 @@ interface BudgetStore {
 }
 
 export const useBudgetStore = create<BudgetStore>((set, get) => ({
-  budgets: MOCK_BUDGETS,
+  budgets: [],
 
   addBudget: (budget) =>
     set((s) => ({ budgets: [...s.budgets, budget] })),

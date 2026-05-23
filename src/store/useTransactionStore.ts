@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { Transaction, SpendByCategory, DailyTotal } from '../types';
-import { MOCK_TRANSACTIONS } from '../data/mockSeed';
 import { SYSTEM_CATEGORIES } from '../data/categories';
 
 interface TransactionStore {
@@ -18,7 +17,7 @@ interface TransactionStore {
 }
 
 export const useTransactionStore = create<TransactionStore>((set, get) => ({
-  transactions: MOCK_TRANSACTIONS,
+  transactions: [],
 
   addTransaction: (tx) =>
     set((s) => ({ transactions: [tx, ...s.transactions] })),
