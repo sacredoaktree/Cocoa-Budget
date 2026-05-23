@@ -5,7 +5,6 @@ import { useAccountStore } from '@shared/store/useAccountStore';
 import { useSettingsStore } from '@shared/store/useSettingsStore';
 import { SYSTEM_CATEGORIES } from '@shared/data/categories';
 import { symbolForCurrency } from '@shared/utils/currency';
-
 // Map Ionic icon names → emoji for web display
 const ICON_EMOJI: Record<string, string> = {
   'card-outline': '💳',
@@ -61,6 +60,7 @@ export default function QuickAdd() {
   const amountRef = useRef<HTMLInputElement>(null);
   const addTransaction = useTransactionStore((s) => s.addTransaction);
   const allAccounts = useAccountStore((s) => s.accounts);
+  const updateAccount = useAccountStore((s) => s.updateAccount);
   const accounts = allAccounts.filter((a) => !a.isArchived);
   const { settings } = useSettingsStore();
 
@@ -121,6 +121,13 @@ export default function QuickAdd() {
       updatedAt: now,
     });
 
+    // Update account balance: deduct for expense, add for income
+    const acct = allAccounts.find((a) => a.id === accountId);
+    if (acct) {
+      const delta = txType === 'expense' ? -cents : cents;
+      updateAccount(accountId, { balance: acct.balance + delta });
+    }
+
     const cat = SYSTEM_CATEGORIES.find((c) => c.id === categoryId);
     const emoji = cat ? categoryEmoji(cat.icon) : '';
     showToast(`${emoji} ${txType === 'expense' ? '-' : '+'}${parsed.toFixed(2)} saved`);
@@ -130,7 +137,7 @@ export default function QuickAdd() {
     setPayee('');
     setDate(todayStr());
     setTimeout(() => amountRef.current?.focus(), 50);
-  }, [amount, accountId, txType, categoryId, payee, date, addTransaction, showToast]);
+  }, [amount, accountId, txType, categoryId, payee, date, addTransaction, updateAccount, allAccounts, showToast]);
 
   // Keyboard shortcut: Enter to save
   const handleAmountKeyDown = useCallback(
