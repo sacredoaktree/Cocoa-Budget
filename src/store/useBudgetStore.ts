@@ -8,6 +8,7 @@ interface BudgetStore {
   budgets: Budget[];
   addBudget: (budget: Budget) => void;
   updateBudget: (id: string, updates: Partial<Budget>) => void;
+  deleteBudget: (id: string) => void;
   getBudgetsWithSpent: (
     month: string,
     spendByCategory: Record<string, number>
@@ -28,6 +29,9 @@ export const useBudgetStore = create<BudgetStore>()(
             b.id === id ? { ...b, ...updates, updatedAt: new Date().toISOString() } : b
           ),
         })),
+
+      deleteBudget: (id) =>
+        set((s) => ({ budgets: s.budgets.filter((b) => b.id !== id) })),
 
       getBudgetsWithSpent: (month, spendByCategory) =>
         get()

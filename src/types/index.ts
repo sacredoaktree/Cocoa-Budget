@@ -89,12 +89,17 @@ export interface Subscription {
 }
 
 // ─── Budget ──────────────────────────────────────────────────────────────
+export type BudgetPeriod = 'daily' | 'weekly' | 'monthly' | 'custom';
+
 export interface Budget {
   id: string;
   categoryId: string;
-  month: string;            // YYYY-MM
+  month: string;            // YYYY-MM (always set; used as key for monthly budgets)
   limitAmount: number;
   rollover: boolean;
+  period?: BudgetPeriod;    // defaults to 'monthly' when absent
+  startDate?: string;       // YYYY-MM-DD; used for daily / weekly / custom
+  endDate?: string;         // YYYY-MM-DD; used for weekly / custom
   createdAt: string;
   updatedAt: string;
 }
