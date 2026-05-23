@@ -1,6 +1,7 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider, useTheme } from '../src/theme';
+import { useSettingsStore } from '../src/store/useSettingsStore';
 import '../src/i18n';
 
 function RootLayoutInner() {
@@ -42,14 +43,19 @@ function RootLayoutInner() {
           name="features/subscription-audit"
           options={{ headerShown: false, presentation: 'card' }}
         />
+        <Stack.Screen
+          name="features/analytics"
+          options={{ headerShown: false, presentation: 'card' }}
+        />
       </Stack>
     </>
   );
 }
 
 export default function RootLayout() {
+  const theme = useSettingsStore((s) => s.settings.theme);
   return (
-    <ThemeProvider>
+    <ThemeProvider override={theme}>
       <RootLayoutInner />
     </ThemeProvider>
   );

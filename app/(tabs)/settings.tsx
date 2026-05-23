@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Modal, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -57,7 +57,7 @@ function SectionCard({ children }: { children: React.ReactNode }) {
 
 export default function SettingsScreen() {
   const { colors } = useTheme();
-  const { settings } = useSettingsStore();
+  const { settings, updateSettings } = useSettingsStore();
   const [showCurrency, setShowCurrency] = useState(false);
   const [showLanguage, setShowLanguage] = useState(false);
 
@@ -179,6 +179,12 @@ export default function SettingsScreen() {
             iconBg="#2AADCC"
             label="Subscription Audit"
             onPress={() => router.push('/features/subscription-audit')}
+          />
+          <SettingsRow
+            icon="bar-chart-outline"
+            iconBg="#E84E8A"
+            label="Analytics & Reports"
+            onPress={() => router.push('/features/analytics')}
             isLast
           />
         </SectionCard>
@@ -200,18 +206,29 @@ export default function SettingsScreen() {
             value={settings.currency}
             onPress={() => setShowCurrency(true)}
           />
-          <SettingsRow
-            icon="moon-outline"
-            iconBg="#3D2B1F"
-            label="Dark Mode"
-            value={
-              settings.theme === 'dark'
-                ? 'On'
-                : settings.theme === 'light'
-                ? 'Off'
-                : 'Auto'
+          <TouchableOpacity
+            style={styles.row}
+            onPress={() =>
+              updateSettings({ theme: settings.theme === 'dark' ? 'light' : 'dark' })
             }
-          />
+            activeOpacity={0.7}
+          >
+            <View style={[styles.rowIcon, { backgroundColor: '#3D2B1F' }]}>
+              <Ionicons name="moon-outline" size={18} color="#FFF" />
+            </View>
+            <Text style={[Typography.body1, { color: colors.textPrimary, flex: 1 }]}>
+              Dark Mode
+            </Text>
+            <Switch
+              value={settings.theme === 'dark'}
+              onValueChange={(val) =>
+                updateSettings({ theme: val ? 'dark' : 'light' })
+              }
+              trackColor={{ false: colors.divider, true: colors.accent }}
+              thumbColor="#FFF"
+            />
+          </TouchableOpacity>
+          <View style={[styles.rowDivider, { backgroundColor: colors.divider }]} />
           <SettingsRow
             icon="language-outline"
             iconBg="#4A90D9"

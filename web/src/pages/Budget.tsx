@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { Plus, X, Pencil, Trash2, Target, Check, ChevronDown, ChevronUp } from 'lucide-react';
-import { useBudgetStore } from '@shared/store/useBudgetStore';
+import { useBudgetStore, getBudgetCategoryIds } from '@shared/store/useBudgetStore';
 import { useTransactionStore } from '@shared/store/useTransactionStore';
 import { useSettingsStore } from '@shared/store/useSettingsStore';
 import { SYSTEM_CATEGORIES } from '@shared/data/categories';
@@ -36,11 +36,12 @@ function periodLabel(b: Budget): string {
   return b.month;
 }
 
-// Compute how much was spent for a budget based on its period
+// Compute how much was spent for a budget based on its period and categoryIds
 function computeSpent(b: Budget, transactions: ReturnType<typeof useTransactionStore.getState>['transactions']): number {
   const p = b.period ?? 'monthly';
+  const catIds = getBudgetCategoryIds(b);
   return transactions
-    .filter((t) => !t.isDeleted && t.type === 'expense' && t.categoryId === b.categoryId)
+    .filter((t) => !t.isDeleted && t.type === 'expense' && catIds.includes(t.categoryId))
     .filter((t) => {
       if (p === 'monthly') return t.date.startsWith(b.month);
       const start = b.startDate ?? (b.month + '-01');
@@ -74,16 +75,25 @@ function BudgetModal({
   const weekStart = format(startOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd');
   const weekEnd   = format(endOfWeek(new Date(), { weekStartsOn: 1 }), 'yyyy-MM-dd');
 
-  const [period, setPeriod]     = useState<BudgetPeriod>(existing?.period ?? 'monthly');
-  const [categoryId, setCatId]  = useState(existing?.categoryId ?? EXPENSE_CATS[0]?.id ?? '');
-  const [amount, setAmount]     = useState(existing ? (existing.limitAmount / 100).toFixed(2) : '');
-  const [month, setMonth]       = useState(existing?.month ?? thisMonth);
-  const [startDate, setStart]   = useState(existing?.startDate ?? today);
-  const [endDate, setEnd]       = useState(existing?.endDate ?? today);
+  const [period, setPeriod]         = useState<BudgetPeriod>(existing?.period ?? 'monthly');
+  const [categoryIds, setCategoryIds] = useState<string[]>(
+    existing ? getBudgetCategoryIds(existing) : (EXPENSE_CATS[0]?.id ? [EXPENSE_CATS[0].id] : [])
+  );
+  const [amount, setAmount]         = useState(existing ? (existing.limitAmount / 100).toFixed(2) : '');
+  const [month, setMonth]           = useState(existing?.month ?? thisMonth);
+  const [startDate, setStart]       = useState(existing?.startDate ?? today);
+  const [endDate, setEnd]           = useState(existing?.endDate ?? today);
   const [showCatPicker, setShowCatPicker] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const { addBudget, updateBudget, deleteBudget } = useBudgetStore();
+
+  // Toggle a category in/out of the selection array
+  const toggleCategory = (catId: string) => {
+    setCategoryIds((prev) =>
+      prev.includes(catId) ? prev.filter((id) => id !== catId) : [...prev, catId]
+    );
+  };
 
   // Auto-set end date when start changes for weekly
   const handleStartChange = (val: string) => {
@@ -110,7 +120,7 @@ function BudgetModal({
 
   const handleSave = useCallback(() => {
     const parsed = parseFloat(amount.replace(/,/g, ''));
-    if (!parsed || parsed <= 0 || !categoryId) return;
+    if (!parsed || parsed <= 0 || categoryIds.length === 0) return;
     const cents = Math.round(parsed * 100);
     const now = new Date().toISOString();
 
@@ -121,7 +131,9 @@ function BudgetModal({
 
     if (existing) {
       updateBudget(existing.id, {
-        categoryId, limitAmount: cents, period,
+        categoryIds,
+        limitAmount: cents,
+        period,
         month: derivedMonth,
         startDate: period !== 'monthly' ? startDate : undefined,
         endDate:   (period === 'weekly' || period === 'custom') ? endDate : undefined,
@@ -129,7 +141,7 @@ function BudgetModal({
     } else {
       addBudget({
         id: `bgt-${Date.now()}`,
-        categoryId,
+        categoryIds,
         limitAmount: cents,
         month: derivedMonth,
         rollover: false,
@@ -141,9 +153,9 @@ function BudgetModal({
       });
     }
     onClose();
-  }, [amount, categoryId, period, month, startDate, endDate, existing, addBudget, updateBudget, onClose]);
+  }, [amount, categoryIds, period, month, startDate, endDate, existing, addBudget, updateBudget, onClose]);
 
-  const selectedCat = EXPENSE_CATS.find((c) => c.id === categoryId);
+  const primaryCat = EXPENSE_CATS.find((c) => c.id === categoryIds[0]);
 
   return (
     <div
@@ -202,33 +214,47 @@ function BudgetModal({
             </div>
           )}
 
-          {/* Category picker */}
+          {/* Category picker (multi-select) */}
           <div>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Category</p>
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
+              Categories
+              {categoryIds.length > 0 && (
+                <span className="ml-2 text-cocoa-accent normal-case font-medium">
+                  {categoryIds.length} selected
+                </span>
+              )}
+            </p>
             <button onClick={() => setShowCatPicker((v) => !v)}
               className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 rounded-xl border-2 border-transparent hover:border-gray-200 transition-colors">
               <div className="flex items-center gap-3">
-                {selectedCat ? (
+                {primaryCat ? (
                   <>
-                    <span className="text-xl">{catEmoji(selectedCat.icon)}</span>
-                    <span className="text-sm font-medium text-gray-900">{selectedCat.name}</span>
+                    <span className="text-xl">{catEmoji(primaryCat.icon)}</span>
+                    <span className="text-sm font-medium text-gray-900">
+                      {categoryIds.length > 1
+                        ? `${primaryCat.name} +${categoryIds.length - 1} more`
+                        : primaryCat.name}
+                    </span>
                   </>
-                ) : <span className="text-sm text-gray-400">Pick a category</span>}
+                ) : <span className="text-sm text-gray-400">Pick categories</span>}
               </div>
               {showCatPicker ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
             </button>
             {showCatPicker && (
               <div className="mt-2 grid grid-cols-4 gap-2">
-                {EXPENSE_CATS.map((cat) => (
-                  <button key={cat.id} onClick={() => { setCatId(cat.id); setShowCatPicker(false); }}
-                    className={`flex flex-col items-center gap-1 p-2 rounded-xl border-2 transition-all text-center ${
-                      categoryId === cat.id ? 'border-cocoa-accent bg-cocoa-bg' : 'border-transparent hover:bg-gray-50'
-                    }`}>
-                    <span className="text-xl leading-none">{catEmoji(cat.icon)}</span>
-                    <span className="text-[10px] font-medium text-gray-600 leading-tight line-clamp-2">{cat.name}</span>
-                    {categoryId === cat.id && <Check size={10} className="text-cocoa-accent" />}
-                  </button>
-                ))}
+                {EXPENSE_CATS.map((cat) => {
+                  const isSelected = categoryIds.includes(cat.id);
+                  return (
+                    <button key={cat.id} onClick={() => toggleCategory(cat.id)}
+                      className={`flex flex-col items-center gap-1 p-2 rounded-xl border-2 transition-all text-center ${
+                        isSelected ? 'border-cocoa-accent bg-cocoa-bg' : 'border-transparent hover:bg-gray-50'
+                      }`}>
+                      <span className="text-xl leading-none">{catEmoji(cat.icon)}</span>
+                      <span className="text-[10px] font-medium text-gray-600 leading-tight line-clamp-2">{cat.name}</span>
+                      {isSelected && <Check size={10} className="text-cocoa-accent" />}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -248,7 +274,7 @@ function BudgetModal({
             <button onClick={onClose} className="flex-1 py-3 rounded-xl text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors">
               Cancel
             </button>
-            <button onClick={handleSave} disabled={!amount || !categoryId}
+            <button onClick={handleSave} disabled={!amount || categoryIds.length === 0}
               className="py-3 px-8 rounded-xl text-sm font-bold text-white disabled:opacity-40 hover:opacity-90 active:scale-95 transition-all"
               style={{ flex: 2, backgroundColor: '#C8956A' }}>
               {existing ? 'Save Changes' : 'Add Budget'}
@@ -287,8 +313,11 @@ function BudgetCard({
   const pct     = budget.limitAmount > 0 ? spent / budget.limitAmount : 0;
   const status  = pct >= 1 ? 'over' : pct >= 0.8 ? 'warning' : 'under';
   const remaining = budget.limitAmount - spent;
-  const cat     = EXPENSE_CATS.find((c) => c.id === budget.categoryId);
-  const emoji   = cat ? catEmoji(cat.icon) : '•';
+
+  const catIds   = getBudgetCategoryIds(budget);
+  const cats     = catIds.map((id) => EXPENSE_CATS.find((c) => c.id === id)).filter(Boolean) as typeof EXPENSE_CATS;
+  const primaryCat = cats[0];
+  const emoji    = primaryCat ? catEmoji(primaryCat.icon) : '•';
 
   const labelColor = status === 'over' ? 'text-red-500' : status === 'warning' ? 'text-yellow-500' : 'text-green-600';
   const badgeColor = (budget.period ?? 'monthly') === 'monthly' ? 'bg-blue-50 text-blue-600'
@@ -300,17 +329,29 @@ function BudgetCard({
     <div className="bg-white rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow">
       <div className="flex items-start gap-3 mb-3">
         <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg flex-shrink-0"
-          style={{ backgroundColor: `${cat?.color ?? '#C8956A'}20` }}>
+          style={{ backgroundColor: `${primaryCat?.color ?? '#C8956A'}20` }}>
           {emoji}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <p className="text-sm font-semibold text-gray-800">{cat?.name ?? 'Unknown'}</p>
+            <p className="text-sm font-semibold text-gray-800">
+              {cats.length > 1 ? `${cats.length} Categories` : (primaryCat?.name ?? 'Unknown')}
+            </p>
             <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full capitalize ${badgeColor}`}>
               {budget.period ?? 'monthly'}
             </span>
           </div>
           <p className="text-xs text-gray-400 mt-0.5">{periodLabel(budget)}</p>
+          {/* Category tags */}
+          {cats.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-1.5">
+              {cats.map((cat) => (
+                <span key={cat.id} className="text-[10px] px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-600 font-medium">
+                  {catEmoji(cat.icon)} {cat.name}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
           <span className={`text-sm font-bold ${labelColor}`}>{Math.round(pct * 100)}%</span>

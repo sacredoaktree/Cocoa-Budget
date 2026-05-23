@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import { useColorScheme } from 'react-native';
 import { LightColors, DarkColors, Colors } from './colors';
 import { Typography } from './typography';
@@ -33,7 +33,7 @@ export function ThemeProvider({
   override?: 'light' | 'dark' | 'system';
 }) {
   const systemScheme = useColorScheme();
-  const [themeMode] = useState<'light' | 'dark' | 'system'>(override ?? 'system');
+  const themeMode = override ?? 'system';
 
   const isDark =
     themeMode === 'dark' || (themeMode === 'system' && systemScheme === 'dark');
