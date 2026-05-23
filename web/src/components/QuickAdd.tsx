@@ -60,19 +60,21 @@ export default function QuickAdd() {
 
   const amountRef = useRef<HTMLInputElement>(null);
   const addTransaction = useTransactionStore((s) => s.addTransaction);
-  const accounts = useAccountStore((s) => s.accounts.filter((a) => !a.isArchived));
+  const allAccounts = useAccountStore((s) => s.accounts);
+  const accounts = allAccounts.filter((a) => !a.isArchived);
   const { settings } = useSettingsStore();
 
   const categories = SYSTEM_CATEGORIES.filter(
     (c) => !c.isArchived && c.type === txType
   );
 
-  // Set default account when accounts load or modal opens
+  // Set default account when modal opens (use stable store reference)
   useEffect(() => {
-    if (open && accounts.length > 0 && !accountId) {
-      setAccountId(accounts[0].id);
+    if (open && !accountId) {
+      const first = allAccounts.find((a) => !a.isArchived);
+      if (first) setAccountId(first.id);
     }
-  }, [open, accounts, accountId]);
+  }, [open, accountId, allAccounts]);
 
   // Auto-focus amount on open
   useEffect(() => {

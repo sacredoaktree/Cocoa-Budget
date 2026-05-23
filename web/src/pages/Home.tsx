@@ -49,7 +49,8 @@ export default function Home() {
   const { settings } = useSettingsStore();
   const { currencySymbol, displayName } = settings;
 
-  const accounts = useAccountStore((s) => s.accounts.filter((a) => !a.isArchived));
+  const allAccounts = useAccountStore((s) => s.accounts);
+  const accounts = allAccounts.filter((a) => !a.isArchived);
   const hasAccounts = accounts.length > 0;
 
   const month = currentMonth();
