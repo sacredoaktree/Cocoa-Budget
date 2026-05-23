@@ -10,6 +10,7 @@ import {
   EyeOff,
 } from 'lucide-react';
 import { useSettingsStore } from '@shared/store/useSettingsStore';
+import QuickAdd from '../QuickAdd';
 
 interface NavItem {
   to: string;
@@ -97,9 +98,12 @@ export default function Shell() {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto pb-20 md:pb-0">
+        <main className="flex-1 overflow-y-auto pb-28 md:pb-0">
           <Outlet />
         </main>
+
+        {/* Quick-add FAB (always visible) */}
+        <QuickAdd />
 
         {/* Bottom tab bar (mobile <768px) */}
         <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-cocoa-divider z-50">

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Wallet, TrendingUp } from 'lucide-react';
 import { useTransactionStore } from '@shared/store/useTransactionStore';
+import { useAccountStore } from '@shared/store/useAccountStore';
 import { useSettingsStore } from '@shared/store/useSettingsStore';
 import { getCategoriesByType } from '@shared/data/categories';
 import { currentMonth } from '@shared/utils/date';
+import { useNavigate } from 'react-router-dom';
 import AmountText from '../components/ui/AmountText';
 import Card from '../components/ui/Card';
 
@@ -42,9 +44,13 @@ function getGreeting(): string {
 
 export default function Home() {
   const [incomeExpanded, setIncomeExpanded] = useState(false);
+  const navigate = useNavigate();
 
   const { settings } = useSettingsStore();
   const { currencySymbol, displayName } = settings;
+
+  const accounts = useAccountStore((s) => s.accounts.filter((a) => !a.isArchived));
+  const hasAccounts = accounts.length > 0;
 
   const month = currentMonth();
   const getMonthlyExpense = useTransactionStore((s) => s.getMonthlyExpense);
@@ -80,6 +86,33 @@ export default function Home() {
         <p className="text-cocoa-text2 text-sm">{getGreeting()},</p>
         <h1 className="text-2xl font-bold text-cocoa-primary">{displayName} 👋</h1>
       </div>
+
+      {/* Empty state guide when no accounts exist */}
+      {!hasAccounts && (
+        <Card className="border-dashed border-2 border-cocoa-divider bg-cocoa-bg/50">
+          <div className="text-center py-4 space-y-3">
+            <div className="flex justify-center gap-3">
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ backgroundColor: '#FFF0DC' }}>
+                <Wallet size={22} style={{ color: '#C8956A' }} />
+              </div>
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ backgroundColor: '#DCFFF4' }}>
+                <TrendingUp size={22} style={{ color: '#2E9E6B' }} />
+              </div>
+            </div>
+            <div>
+              <p className="font-semibold text-cocoa-primary text-sm">Welcome to Cocoa Budget!</p>
+              <p className="text-xs text-cocoa-text2 mt-1">Start by adding your accounts, then tap <strong>+</strong> to log transactions.</p>
+            </div>
+            <button
+              onClick={() => navigate('/accounts')}
+              className="text-xs font-semibold px-4 py-2 rounded-xl text-white transition-colors"
+              style={{ backgroundColor: '#C8956A' }}
+            >
+              Add your first account →
+            </button>
+          </div>
+        </Card>
+      )}
 
       {/* Monthly summary bar */}
       <Card className="!p-0 overflow-hidden">

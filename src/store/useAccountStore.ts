@@ -1,4 +1,6 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { cocoaStorage } from '../utils/storage';
 import { Account } from '../types';
 
 interface AccountStore {
@@ -14,43 +16,48 @@ interface AccountStore {
   getNetWorth: () => number;
 }
 
-export const useAccountStore = create<AccountStore>((set, get) => ({
-  accounts: [],
+export const useAccountStore = create<AccountStore>()(
+  persist(
+    (set, get) => ({
+      accounts: [],
 
-  addAccount: (account) =>
-    set((s) => ({ accounts: [...s.accounts, account] })),
+      addAccount: (account) =>
+        set((s) => ({ accounts: [...s.accounts, account] })),
 
-  updateAccount: (id, updates) =>
-    set((s) => ({
-      accounts: s.accounts.map((a) =>
-        a.id === id ? { ...a, ...updates, updatedAt: new Date().toISOString() } : a
-      ),
-    })),
+      updateAccount: (id, updates) =>
+        set((s) => ({
+          accounts: s.accounts.map((a) =>
+            a.id === id ? { ...a, ...updates, updatedAt: new Date().toISOString() } : a
+          ),
+        })),
 
-  archiveAccount: (id) =>
-    set((s) => ({
-      accounts: s.accounts.map((a) =>
-        a.id === id ? { ...a, isArchived: true, updatedAt: new Date().toISOString() } : a
-      ),
-    })),
+      archiveAccount: (id) =>
+        set((s) => ({
+          accounts: s.accounts.map((a) =>
+            a.id === id ? { ...a, isArchived: true, updatedAt: new Date().toISOString() } : a
+          ),
+        })),
 
-  getById: (id) => get().accounts.find((a) => a.id === id),
+      getById: (id) => get().accounts.find((a) => a.id === id),
 
-  getAssets: () =>
-    get().accounts.filter((a) => !a.isArchived && a.countInAsset && a.balance >= 0),
+      getAssets: () =>
+        get().accounts.filter((a) => !a.isArchived && a.countInAsset && a.balance >= 0),
 
-  getLiabilities: () =>
-    get().accounts.filter((a) => !a.isArchived && a.balance < 0),
+      getLiabilities: () =>
+        get().accounts.filter((a) => !a.isArchived && a.balance < 0),
 
-  getTotalAssets: () =>
-    get()
-      .getAssets()
-      .reduce((sum, a) => sum + a.balance, 0),
+      getTotalAssets: () =>
+        get()
+          .getAssets()
+          .reduce((sum, a) => sum + a.balance, 0),
 
-  getTotalLiabilities: () =>
-    get()
-      .getLiabilities()
-      .reduce((sum, a) => sum + Math.abs(a.balance), 0),
+      getTotalLiabilities: () =>
+        get()
+          .getLiabilities()
+          .reduce((sum, a) => sum + Math.abs(a.balance), 0),
 
-  getNetWorth: () => get().getTotalAssets() - get().getTotalLiabilities(),
-}));
+      getNetWorth: () => get().getTotalAssets() - get().getTotalLiabilities(),
+    }),
+    { name: 'cocoa-accounts', storage: cocoaStorage }
+  )
+);
