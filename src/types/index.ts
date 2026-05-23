@@ -93,7 +93,8 @@ export type BudgetPeriod = 'daily' | 'weekly' | 'monthly' | 'custom';
 
 export interface Budget {
   id: string;
-  categoryId: string;
+  categoryId?: string;     // legacy single-category (kept for backwards compat)
+  categoryIds?: string[];  // multi-category (new — preferred)
   month: string;            // YYYY-MM (always set; used as key for monthly budgets)
   limitAmount: number;
   rollover: boolean;
@@ -137,7 +138,8 @@ export interface AccountWithStats extends Account {
 }
 
 export interface BudgetWithSpent extends Budget {
-  categoryName: string;
+  categoryName: string;    // primary category name or "N categories"
+  categoryNames: string[]; // all category names
   categoryIcon: string;
   categoryColor: string;
   spent: number;
