@@ -23,6 +23,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   scheme: 'cocoabudget',
   userInterfaceStyle: 'automatic',
   newArchEnabled: true,
+  jsEngine: 'jsc',
   splash: {
     image: './assets/splash-icon.png',
     resizeMode: 'contain',
