@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "scheme": "cocoa-budget",
+    "scheme": "cocoabudget",
     "plugins": [
       "expo-router",
       "expo-font",

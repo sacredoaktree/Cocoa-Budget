@@ -3,9 +3,11 @@ import { Tabs } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../src/theme';
+import { useCloudSync } from '../../src/hooks/useCloudSync';
 
 export default function TabsLayout() {
   const { colors } = useTheme();
+  useCloudSync(); // Pull remote data into local stores on sign-in
 
   // Memoized to prevent React 19 infinite re-render with react-navigation useDescriptors
   const screenOptions = useMemo(() => ({

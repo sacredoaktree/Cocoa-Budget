@@ -1,15 +1,44 @@
-import { Stack } from 'expo-router';
+import { Stack, router, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 import { ThemeProvider, useTheme } from '../src/theme';
 import { useSettingsStore } from '../src/store/useSettingsStore';
+import { AuthProvider, useAuth } from '../src/context/AuthContext';
 import '../src/i18n';
 
+// ─── Auth guard: redirects unauthenticated users to sign-in ──────────────────
+function AuthGuard({ children }: { children: React.ReactNode }) {
+  const { session, loading } = useAuth();
+  const segments = useSegments();
+
+  useEffect(() => {
+    if (loading) return;
+    const inAuthGroup = segments[0] === 'auth';
+    if (!session && !inAuthGroup) {
+      // Not signed in — redirect to sign-in
+      router.replace('/auth/sign-in');
+    } else if (session && inAuthGroup) {
+      // Already signed in — redirect to main app
+      router.replace('/(tabs)');
+    }
+  }, [session, loading, segments]);
+
+  return <>{children}</>;
+}
+
+// ─── Inner layout with theme ──────────────────────────────────────────────────
 function RootLayoutInner() {
   const { isDark } = useTheme();
   return (
     <>
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <Stack screenOptions={{ headerShown: false }}>
+        {/* Auth screens */}
+        <Stack.Screen name="auth/sign-in" />
+        <Stack.Screen name="auth/sign-up" />
+        <Stack.Screen name="auth/forgot-password" />
+
+        {/* Main app */}
         <Stack.Screen name="(tabs)" />
         <Stack.Screen
           name="account/[id]"
@@ -52,11 +81,16 @@ function RootLayoutInner() {
   );
 }
 
+// ─── Root layout ──────────────────────────────────────────────────────────────
 export default function RootLayout() {
   const theme = useSettingsStore((s) => s.settings.theme);
   return (
-    <ThemeProvider override={theme}>
-      <RootLayoutInner />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider override={theme}>
+        <AuthGuard>
+          <RootLayoutInner />
+        </AuthGuard>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }

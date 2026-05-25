@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Modal, Switch } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Modal, Switch, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -7,6 +7,7 @@ import { useTheme } from '../../src/theme';
 import { Typography } from '../../src/theme/typography';
 import { Shadow } from '../../src/theme/spacing';
 import { useSettingsStore } from '../../src/store/useSettingsStore';
+import { useAuth } from '../../src/context/AuthContext';
 import { CurrencySettingsSheet } from '../../src/components/features/CurrencySettingsSheet';
 import { LanguageSettingsSheet } from '../../src/components/features/LanguageSettingsSheet';
 
@@ -58,8 +59,16 @@ function SectionCard({ children }: { children: React.ReactNode }) {
 export default function SettingsScreen() {
   const { colors } = useTheme();
   const { settings, updateSettings } = useSettingsStore();
+  const { user, signOut } = useAuth();
   const [showCurrency, setShowCurrency] = useState(false);
   const [showLanguage, setShowLanguage] = useState(false);
+
+  const handleSignOut = () => {
+    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Sign Out', style: 'destructive', onPress: () => signOut() },
+    ]);
+  };
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]} edges={['top']}>
@@ -311,6 +320,35 @@ export default function SettingsScreen() {
             value="v1.0.0"
             isLast
           />
+        </SectionCard>
+
+        {/* Account section */}
+        <Text
+          style={[
+            Typography.overline,
+            { color: colors.textSecondary, marginLeft: 16, marginBottom: 8 },
+          ]}
+        >
+          Account
+        </Text>
+        <SectionCard>
+          <View style={styles.row}>
+            <View style={[styles.rowIcon, { backgroundColor: '#4A90D9' }]}>
+              <Ionicons name="mail-outline" size={18} color="#FFF" />
+            </View>
+            <Text style={[Typography.body2, { color: colors.textSecondary, flex: 1 }]}>
+              {user?.email ?? 'Not signed in'}
+            </Text>
+          </View>
+          <View style={[styles.rowDivider, { backgroundColor: colors.divider }]} />
+          <TouchableOpacity style={styles.row} onPress={handleSignOut} activeOpacity={0.7}>
+            <View style={[styles.rowIcon, { backgroundColor: '#D94F3D' }]}>
+              <Ionicons name="log-out-outline" size={18} color="#FFF" />
+            </View>
+            <Text style={[Typography.body1, { color: '#D94F3D', flex: 1, fontWeight: '600' }]}>
+              Sign Out
+            </Text>
+          </TouchableOpacity>
         </SectionCard>
 
         <View style={{ height: 40 }} />
