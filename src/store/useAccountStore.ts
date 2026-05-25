@@ -8,6 +8,7 @@ interface AccountStore {
   addAccount: (account: Account) => void;
   updateAccount: (id: string, updates: Partial<Account>) => void;
   archiveAccount: (id: string) => void;
+  transfer: (fromId: string, toId: string, amountCents: number, feeCents: number) => void;
   getById: (id: string) => Account | undefined;
   getAssets: () => Account[];
   getLiabilities: () => Account[];
@@ -36,6 +37,16 @@ export const useAccountStore = create<AccountStore>()(
           accounts: s.accounts.map((a) =>
             a.id === id ? { ...a, isArchived: true, updatedAt: new Date().toISOString() } : a
           ),
+        })),
+
+      transfer: (fromId, toId, amountCents, feeCents) =>
+        set((s) => ({
+          accounts: s.accounts.map((a) => {
+            const now = new Date().toISOString();
+            if (a.id === fromId) return { ...a, balance: a.balance - amountCents - feeCents, updatedAt: now };
+            if (a.id === toId)   return { ...a, balance: a.balance + amountCents, updatedAt: now };
+            return a;
+          }),
         })),
 
       getById: (id) => get().accounts.find((a) => a.id === id),

@@ -8,6 +8,7 @@ interface SubscriptionStore {
   addSubscription: (sub: Subscription) => void;
   updateSubscription: (id: string, updates: Partial<Subscription>) => void;
   cancelSubscription: (id: string) => void;
+  deleteSubscription: (id: string) => void;
   getActive: () => Subscription[];
   getAnnualCost: () => number;
 }
@@ -33,6 +34,9 @@ export const useSubscriptionStore = create<SubscriptionStore>()(
             sub.id === id ? { ...sub, status: 'cancelled', updatedAt: new Date().toISOString() } : sub
           ),
         })),
+
+      deleteSubscription: (id) =>
+        set((s) => ({ subscriptions: s.subscriptions.filter((sub) => sub.id !== id) })),
 
       getActive: () => get().subscriptions.filter((s) => s.status === 'active'),
 

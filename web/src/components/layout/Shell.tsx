@@ -9,6 +9,7 @@ import {
   Eye,
   EyeOff,
   BarChart2,
+  RefreshCw,
 } from 'lucide-react';
 import { useSettingsStore } from '@shared/store/useSettingsStore';
 import QuickAdd from '../QuickAdd';
@@ -20,12 +21,13 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { to: '/',             label: 'Home',         icon: <Home size={20} /> },
-  { to: '/accounts',    label: 'Accounts',     icon: <Wallet size={20} /> },
-  { to: '/transactions',label: 'Transactions', icon: <Receipt size={20} /> },
-  { to: '/budget',      label: 'Budget',       icon: <PieChart size={20} /> },
-  { to: '/analytics',   label: 'Analytics',    icon: <BarChart2 size={20} /> },
-  { to: '/settings',    label: 'Settings',     icon: <Settings size={20} /> },
+  { to: '/',                      label: 'Home',      icon: <Home size={20} /> },
+  { to: '/accounts',              label: 'Accounts',  icon: <Wallet size={20} /> },
+  { to: '/transactions',          label: 'Txns',      icon: <Receipt size={20} /> },
+  { to: '/budget',                label: 'Budget',    icon: <PieChart size={20} /> },
+  { to: '/subscription-audit',    label: 'Recurring', icon: <RefreshCw size={20} /> },
+  { to: '/analytics',             label: 'Analytics', icon: <BarChart2 size={20} /> },
+  { to: '/settings',              label: 'Settings',  icon: <Settings size={20} /> },
 ];
 
 export default function Shell() {

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Plus, X, Pencil, Archive } from 'lucide-react';
+import { Plus, X, Pencil, Archive, ArrowLeftRight } from 'lucide-react';
 import { useAccountStore } from '@shared/store/useAccountStore';
+import { useTransactionStore } from '@shared/store/useTransactionStore';
 import { useSettingsStore } from '@shared/store/useSettingsStore';
 import { Account, AccountType } from '@shared/types';
-import { CURRENCY_SYMBOLS, symbolForCurrency } from '@shared/utils/currency';
+import { CURRENCY_SYMBOLS, symbolForCurrency, formatCurrency } from '@shared/utils/currency';
 import AmountText from '../components/ui/AmountText';
 import Card from '../components/ui/Card';
 
@@ -27,6 +28,186 @@ const ACCOUNT_COLORS = [
 
 const ASSET_TYPES: AccountType[]     = ['checking', 'savings', 'cash', 'digital', 'investment', 'stock', 'crypto'];
 const LIABILITY_TYPES: AccountType[] = ['credit', 'loan'];
+
+// ── Transfer Modal ────────────────────────────────────────────────────────────
+function TransferModal({ onClose }: { onClose: () => void }) {
+  const accounts    = useAccountStore((s) => s.accounts.filter((a) => !a.isArchived));
+  const transfer    = useAccountStore((s) => s.transfer);
+  const addTransaction = useTransactionStore((s) => s.addTransaction);
+  const { settings } = useSettingsStore();
+  const symbol = symbolForCurrency(settings.currency);
+
+  const [fromId, setFromId]     = useState(accounts[0]?.id ?? '');
+  const [toId, setToId]         = useState(accounts[1]?.id ?? accounts[0]?.id ?? '');
+  const [amountRaw, setAmountRaw] = useState('');
+  const [feeRaw, setFeeRaw]     = useState('');
+  const [note, setNote]         = useState('');
+  const [date, setDate]         = useState(new Date().toISOString().slice(0, 10));
+  const [error, setError]       = useState('');
+
+  const fromAccount = accounts.find((a) => a.id === fromId);
+  const toAccount   = accounts.find((a) => a.id === toId);
+  const amountCents = Math.round(parseFloat(amountRaw || '0') * 100);
+  const feeCents    = Math.round(parseFloat(feeRaw || '0') * 100);
+  const totalDebit  = amountCents + feeCents;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!fromId || !toId)    { setError('Select both accounts'); return; }
+    if (fromId === toId)     { setError('Cannot transfer to the same account'); return; }
+    if (amountCents <= 0)    { setError('Enter a valid amount'); return; }
+
+    const now   = new Date();
+    const time  = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const pairId = `pair-${Date.now()}`;
+    const txNote = note.trim() || `Transfer to ${toAccount?.name ?? ''}`;
+
+    addTransaction({
+      id: `tx-${Date.now()}-out`,
+      type: 'transfer',
+      amount: totalDebit,
+      accountId: fromId,
+      categoryId: 'cat-transfer',
+      transferToAccountId: toId,
+      transferPairId: pairId,
+      payee: toAccount?.name ?? 'Transfer',
+      note: txNote,
+      date,
+      time,
+      isDeleted: false,
+      createdAt: now.toISOString(),
+      updatedAt: now.toISOString(),
+    });
+
+    addTransaction({
+      id: `tx-${Date.now() + 1}-in`,
+      type: 'transfer',
+      amount: amountCents,
+      accountId: toId,
+      categoryId: 'cat-transfer',
+      transferToAccountId: fromId,
+      transferPairId: pairId,
+      payee: fromAccount?.name ?? 'Transfer',
+      note: `Transfer from ${fromAccount?.name ?? ''}${note.trim() ? ` · ${note.trim()}` : ''}`,
+      date,
+      time,
+      isDeleted: false,
+      createdAt: now.toISOString(),
+      updatedAt: now.toISOString(),
+    });
+
+    transfer(fromId, toId, amountCents, feeCents);
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/50 p-4">
+      <div className="bg-white rounded-t-2xl md:rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
+        {/* Header */}
+        <div
+          className="px-6 pt-6 pb-5 flex items-center justify-between"
+          style={{ background: 'linear-gradient(135deg, #4A7FD4 0%, #7BA7E8 100%)' }}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+              <ArrowLeftRight size={20} className="text-white" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-white">Transfer Money</h2>
+              <p className="text-xs text-white/70">Move funds between accounts</p>
+            </div>
+          </div>
+          <button onClick={onClose} className="p-1.5 rounded-xl bg-white/20 hover:bg-white/30 text-white">
+            <X size={18} />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
+          {/* From → To */}
+          <div className="flex items-end gap-3">
+            <div className="flex-1">
+              <label className="block text-xs font-semibold text-cocoa-text2 mb-1.5 uppercase tracking-wide">From</label>
+              <select value={fromId} onChange={(e) => setFromId(e.target.value)}
+                className="w-full bg-cocoa-input border border-cocoa-divider rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                {accounts.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+              </select>
+            </div>
+            <div className="pb-2.5 text-cocoa-text3 font-bold text-lg">→</div>
+            <div className="flex-1">
+              <label className="block text-xs font-semibold text-cocoa-text2 mb-1.5 uppercase tracking-wide">To</label>
+              <select value={toId} onChange={(e) => setToId(e.target.value)}
+                className="w-full bg-cocoa-input border border-cocoa-divider rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                {accounts.filter((a) => a.id !== fromId).map((a) => (
+                  <option key={a.id} value={a.id}>{a.name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Amount */}
+          <div>
+            <label className="block text-xs font-semibold text-cocoa-text2 mb-1.5 uppercase tracking-wide">Amount</label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-cocoa-text2 text-sm font-medium">{symbol}</span>
+              <input type="number" value={amountRaw} onChange={(e) => setAmountRaw(e.target.value)}
+                placeholder="0.00" min="0" step="0.01"
+                className="w-full bg-cocoa-input border border-cocoa-divider rounded-xl pl-8 pr-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
+            </div>
+            {fromAccount && amountCents > 0 && (
+              <p className="text-xs text-cocoa-text3 mt-1">
+                {fromAccount.name} balance after: {formatCurrency(fromAccount.balance - totalDebit, symbol)}
+              </p>
+            )}
+          </div>
+
+          {/* Transfer Fee */}
+          <div>
+            <label className="block text-xs font-semibold text-cocoa-text2 mb-1.5 uppercase tracking-wide">
+              Transfer Fee <span className="normal-case font-normal text-cocoa-text3">(optional)</span>
+            </label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-cocoa-text2 text-sm font-medium">{symbol}</span>
+              <input type="number" value={feeRaw} onChange={(e) => setFeeRaw(e.target.value)}
+                placeholder="0.00" min="0" step="0.01"
+                className="w-full bg-cocoa-input border border-cocoa-divider rounded-xl pl-8 pr-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
+            </div>
+            {feeCents > 0 && amountCents > 0 && (
+              <p className="text-xs text-cocoa-text3 mt-1">
+                Total deducted from {fromAccount?.name}: {formatCurrency(totalDebit, symbol)}
+                {' '}({formatCurrency(amountCents, symbol)} + {formatCurrency(feeCents, symbol)} fee)
+              </p>
+            )}
+          </div>
+
+          {/* Date */}
+          <div>
+            <label className="block text-xs font-semibold text-cocoa-text2 mb-1.5 uppercase tracking-wide">Date</label>
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)}
+              className="w-full bg-cocoa-input border border-cocoa-divider rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          </div>
+
+          {/* Note */}
+          <div>
+            <label className="block text-xs font-semibold text-cocoa-text2 mb-1.5 uppercase tracking-wide">
+              Note <span className="normal-case font-normal text-cocoa-text3">(optional)</span>
+            </label>
+            <input type="text" value={note} onChange={(e) => setNote(e.target.value)}
+              placeholder="e.g. Monthly savings transfer"
+              className="w-full bg-cocoa-input border border-cocoa-divider rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          </div>
+
+          {error && <p className="text-xs text-cocoa-expense font-semibold">{error}</p>}
+
+          <button type="submit"
+            className="w-full py-3.5 rounded-xl text-white font-bold text-sm transition-colors"
+            style={{ background: 'linear-gradient(135deg, #4A7FD4 0%, #7BA7E8 100%)' }}>
+            Transfer {amountCents > 0 ? formatCurrency(amountCents, symbol) : ''}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
 
 // ── Add Account Modal ─────────────────────────────────────────────────────────
 function AddAccountModal({ onClose, defaultCurrency }: { onClose: () => void; defaultCurrency: string }) {
@@ -392,8 +573,9 @@ export default function Accounts() {
   const { settings }        = useSettingsStore();
   const symbol              = symbolForCurrency(settings.currency);
 
-  const [showModal, setShowModal]       = useState(false);
-  const [editAccount, setEditAccount]   = useState<Account | null>(null);
+  const [showModal, setShowModal]         = useState(false);
+  const [showTransfer, setShowTransfer]   = useState(false);
+  const [editAccount, setEditAccount]     = useState<Account | null>(null);
 
   const totalAssets      = getTotalAssets();
   const totalLiabilities = getTotalLiabilities();
@@ -408,13 +590,24 @@ export default function Accounts() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-cocoa-text1">Accounts</h1>
-        <button
-          onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl text-white text-sm font-semibold bg-cocoa-accent hover:opacity-90"
-        >
-          <Plus size={16} />
-          Add Account
-        </button>
+        <div className="flex items-center gap-2">
+          {active.length >= 2 && (
+            <button
+              onClick={() => setShowTransfer(true)}
+              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold border border-cocoa-divider text-cocoa-text2 hover:border-blue-300 hover:text-blue-500 hover:bg-blue-50 transition-colors"
+            >
+              <ArrowLeftRight size={15} />
+              Transfer
+            </button>
+          )}
+          <button
+            onClick={() => setShowModal(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-white text-sm font-semibold bg-cocoa-accent hover:opacity-90"
+          >
+            <Plus size={16} />
+            Add Account
+          </button>
+        </div>
       </div>
 
       {/* Net Worth hero */}
@@ -478,6 +671,9 @@ export default function Accounts() {
       )}
       {editAccount && (
         <EditAccountModal account={editAccount} onClose={() => setEditAccount(null)} />
+      )}
+      {showTransfer && (
+        <TransferModal onClose={() => setShowTransfer(false)} />
       )}
     </div>
   );

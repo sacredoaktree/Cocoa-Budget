@@ -43,11 +43,12 @@ function getEmoji(icon: string) { return ICON_EMOJI_MAP[icon] ?? '🎯'; }
 
 function calcRates(remaining: number, daysLeft: number) {
   if (daysLeft <= 0 || remaining <= 0) return { daily: 0, weekly: 0, biweekly: 0, monthly: 0 };
+  const daily = remaining / daysLeft;
   return {
-    daily: remaining / daysLeft,
-    weekly: (remaining / daysLeft) * 7,
-    biweekly: (remaining / daysLeft) * 14,
-    monthly: (remaining / daysLeft) * 30.44,
+    daily,
+    weekly:   daysLeft >= 7     ? daily * 7     : remaining,
+    biweekly: daysLeft >= 14    ? daily * 14    : remaining,
+    monthly:  daysLeft >= 30.44 ? daily * 30.44 : remaining,
   };
 }
 
