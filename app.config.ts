@@ -66,7 +66,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     revenueCatIosKey: process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY,
     revenueCatAndroidKey: process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY,
     eas: {
-      projectId: process.env.EAS_PROJECT_ID ?? 'cocoa-budget',
+      projectId: process.env.EAS_PROJECT_ID ?? '79ccefa8-08d7-4583-a87e-d0a9ccca616e',
     },
   },
 });
