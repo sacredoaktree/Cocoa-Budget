@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { ThemeProvider, useTheme } from '../src/theme';
 import { useSettingsStore } from '../src/store/useSettingsStore';
 import { AuthProvider, useAuth } from '../src/context/AuthContext';
+import { SubscriptionProvider } from '../src/context/SubscriptionContext';
 import '../src/i18n';
 
 // ─── Auth guard: redirects unauthenticated users to sign-in ──────────────────
@@ -76,6 +77,10 @@ function RootLayoutInner() {
           name="features/analytics"
           options={{ headerShown: false, presentation: 'card' }}
         />
+        <Stack.Screen
+          name="paywall"
+          options={{ headerShown: false, presentation: 'modal' }}
+        />
       </Stack>
     </>
   );
@@ -86,11 +91,13 @@ export default function RootLayout() {
   const theme = useSettingsStore((s) => s.settings.theme);
   return (
     <AuthProvider>
-      <ThemeProvider override={theme}>
-        <AuthGuard>
-          <RootLayoutInner />
-        </AuthGuard>
-      </ThemeProvider>
+      <SubscriptionProvider>
+        <ThemeProvider override={theme}>
+          <AuthGuard>
+            <RootLayoutInner />
+          </AuthGuard>
+        </ThemeProvider>
+      </SubscriptionProvider>
     </AuthProvider>
   );
 }
