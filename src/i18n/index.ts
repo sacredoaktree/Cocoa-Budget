@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { getLocales } from 'expo-localization';
 
 import en from './locales/en.json';
 import fil from './locales/fil.json';
@@ -11,7 +10,18 @@ import fr from './locales/fr.json';
 import de from './locales/de.json';
 import ar from './locales/ar.json';
 
-const deviceLocale = getLocales()[0]?.languageCode ?? 'en';
+// Safe locale detection — wrapped in try/catch to prevent crash on some devices
+let deviceLocale = 'en';
+try {
+  const { getLocales } = require('expo-localization');
+  const locales = getLocales();
+  if (locales && locales[0] && locales[0].languageCode) {
+    deviceLocale = locales[0].languageCode;
+  }
+} catch (e) {
+  // Fallback to English if expo-localization fails
+  console.warn('[i18n] Failed to detect device locale:', e);
+}
 
 i18n.use(initReactI18next).init({
   resources: {

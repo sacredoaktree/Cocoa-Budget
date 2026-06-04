@@ -1,6 +1,12 @@
-import 'react-native-url-polyfill/auto';
+/**
+ * Supabase client configuration
+ *
+ * Uses AsyncStorage on native and localStorage on web for auth session persistence.
+ * Note: react-native-url-polyfill is NOT needed for @supabase/supabase-js v2.x+
+ * as it bundles its own URL handling.
+ */
 import { createClient } from '@supabase/supabase-js';
-import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 
 // ─── Supabase project config ──────────────────────────────────────────────────
@@ -8,37 +14,52 @@ export const SUPABASE_URL = 'https://czxrnmwntwokhcjbqvgs.supabase.co';
 export const SUPABASE_ANON_KEY =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6eHJubXdudHdva2hjamJxdmdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MDU1NDIsImV4cCI6MjA5NTI4MTU0Mn0.Uy-jMlbRFVuEoiVGEBQKvMRJBJOIqJMJJGkBQkjWFzM';
 
-// ─── Secure storage adapter for React Native ─────────────────────────────────
-// Uses expo-secure-store on native, localStorage on web.
-const ExpoSecureStoreAdapter = {
-  getItem: (key: string) => {
+// ─── Storage adapter for auth sessions ───────────────────────────────────────
+const AuthStorageAdapter = {
+  getItem: async (key: string): Promise<string | null> => {
     if (Platform.OS === 'web') {
-      try { return Promise.resolve(localStorage.getItem(key)); } catch { return Promise.resolve(null); }
+      try {
+        return localStorage.getItem(key);
+      } catch {
+        return null;
+      }
     }
-    return SecureStore.getItemAsync(key);
+    try {
+      return await AsyncStorage.getItem(key);
+    } catch {
+      return null;
+    }
   },
-  setItem: (key: string, value: string) => {
+  setItem: async (key: string, value: string): Promise<void> => {
     if (Platform.OS === 'web') {
-      try { localStorage.setItem(key, value); } catch {}
-      return Promise.resolve();
+      try {
+        localStorage.setItem(key, value);
+      } catch {}
+      return;
     }
-    return SecureStore.setItemAsync(key, value);
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch {}
   },
-  removeItem: (key: string) => {
+  removeItem: async (key: string): Promise<void> => {
     if (Platform.OS === 'web') {
-      try { localStorage.removeItem(key); } catch {}
-      return Promise.resolve();
+      try {
+        localStorage.removeItem(key);
+      } catch {}
+      return;
     }
-    return SecureStore.deleteItemAsync(key);
+    try {
+      await AsyncStorage.removeItem(key);
+    } catch {}
   },
 };
 
 // ─── Supabase client ──────────────────────────────────────────────────────────
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {
-    storage: ExpoSecureStoreAdapter,
+    storage: AuthStorageAdapter,
     autoRefreshToken: true,
     persistSession: true,
-    detectSessionInUrl: false,
+    detectSessionInUrl: Platform.OS === 'web',
   },
 });

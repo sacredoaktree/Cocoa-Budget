@@ -167,17 +167,22 @@ export const splitSync = {
 
 // ─── Full initial sync (called on login) ──────────────────────────────────────
 export async function pullAllFromCloud() {
-  const [accounts, transactions, subscriptions, budgets, goals, snapshots, splits] =
-    await Promise.all([
-      accountSync.fetchAll(),
-      transactionSync.fetchAll(),
-      subscriptionSync.fetchAll(),
-      budgetSync.fetchAll(),
-      goalSync.fetchAll(),
-      netWorthSync.fetchAll(),
-      splitSync.fetchAll(),
-    ]);
-  return { accounts, transactions, subscriptions, budgets, goals, snapshots, splits };
+  try {
+    const [accounts, transactions, subscriptions, budgets, goals, snapshots, splits] =
+      await Promise.all([
+        accountSync.fetchAll(),
+        transactionSync.fetchAll(),
+        subscriptionSync.fetchAll(),
+        budgetSync.fetchAll(),
+        goalSync.fetchAll(),
+        netWorthSync.fetchAll(),
+        splitSync.fetchAll(),
+      ]);
+    return { accounts, transactions, subscriptions, budgets, goals, snapshots, splits };
+  } catch (err) {
+    console.warn('[syncService] pullAllFromCloud failed:', err);
+    return { accounts: [], transactions: [], subscriptions: [], budgets: [], goals: [], snapshots: [], splits: [] };
+  }
 }
 
 // ─── Mapping helpers: remote DB row → local TypeScript type ──────────────────

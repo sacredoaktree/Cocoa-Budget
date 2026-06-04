@@ -2,6 +2,8 @@
  * useProGate
  *
  * A convenience hook for gating Pro features.
+ * Currently in free mode — all features are unlocked (isPro = true).
+ *
  * Usage:
  *   const { isPro, requirePro } = useProGate();
  *   // In a button handler:

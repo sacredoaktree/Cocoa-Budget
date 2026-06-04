@@ -398,7 +398,7 @@ function GoalCard({ goal, sym, colors, onEdit }: {
                 Timeline
               </Text>
               <View style={[styles.timelineTrack, { backgroundColor: colors.divider }]}>
-                <View style={[styles.timelineFill, { width: `${timeElapsedPct * 100}%` as any, backgroundColor: colors.border ?? '#D0C8BF' }]} />
+                <View style={[styles.timelineFill, { width: `${timeElapsedPct * 100}%` as any, backgroundColor: colors.divider }]} />
                 <View style={[styles.timelineSaved, { width: `${pct * 100}%` as any, backgroundColor: goal.color, opacity: 0.6 }]} />
                 {timeElapsedPct > 0.03 && timeElapsedPct < 0.97 && (
                   <View style={[styles.todayDot, {
