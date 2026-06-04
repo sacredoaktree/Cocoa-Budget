@@ -1,0 +1,230 @@
+{
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "close": "Fermer",
+    "back": "Retour",
+    "add": "Ajouter",
+    "confirm": "Confirmer",
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "retry": "Réessayer",
+    "noData": "Aucune donnée",
+    "ok": "OK"
+  },
+  "nav": {
+    "home": "Accueil",
+    "accounts": "Comptes",
+    "transactions": "Transactions",
+    "budget": "Budget",
+    "settings": "Paramètres"
+  },
+  "home": {
+    "greeting_morning": "Bonjour",
+    "greeting_afternoon": "Bon après-midi",
+    "greeting_evening": "Bonsoir",
+    "periods": {
+      "today": "Aujourd'hui",
+      "week": "Cette semaine",
+      "month": "Ce mois-ci",
+      "last": "Mois dernier"
+    },
+    "expenses": "Dépenses",
+    "income": "Revenus",
+    "balance": "Solde",
+    "weeklyDigest": "Résumé de la semaine passée",
+    "digestSpent": "Vous avez dépensé {{amount}} la semaine dernière",
+    "digestTopCategory": "Principal: {{category}}",
+    "digestVsLastWeek_more": "↑ {{pct}}% de plus que la semaine précédente",
+    "digestVsLastWeek_less": "↓ {{pct}}% de moins que la semaine précédente"
+  },
+  "accounts": {
+    "title": "Comptes",
+    "netWorth": "Patrimoine net",
+    "assets": "Actifs",
+    "liabilities": "Passifs",
+    "debit": "Débit",
+    "credit": "Crédit",
+    "investment": "Investissement",
+    "loan": "Prêt",
+    "balance": "Sol.",
+    "addAccount": "Ajouter un compte",
+    "noAccounts": "Aucun compte. Appuyez sur + pour en ajouter un.",
+    "types": {
+      "checking": "Compte courant",
+      "savings": "Épargne",
+      "credit": "Carte de crédit",
+      "cash": "Espèces",
+      "digital": "Portefeuille numérique",
+      "loan": "Prêt",
+      "investment": "Investissement",
+      "stock": "Actions",
+      "crypto": "Crypto"
+    }
+  },
+  "transactions": {
+    "title": "Transactions",
+    "record": "Enregistrement",
+    "stats": "Statistiques",
+    "noTransactions": "Aucune transaction",
+    "income": "Revenus",
+    "expense": "Dépense",
+    "transfer": "Virement",
+    "balance": "Solde",
+    "addTransaction": "Ajouter une transaction",
+    "category": "Catégorie",
+    "account": "Compte",
+    "note": "Ajouter une note...",
+    "trends": "Tendances",
+    "categories": "Catégories",
+    "overview": "Aperçu",
+    "in": "ENTRÉE",
+    "out": "SORTIE"
+  },
+  "budget": {
+    "title": "Budget",
+    "totalSpent": "Total dépensé",
+    "totalBudget": "Budget total",
+    "remaining": "{{amount}} restant",
+    "overBy": "Dépassé de {{amount}}",
+    "noBudgets": "Aucun budget défini pour ce mois",
+    "status": {
+      "ok": "OK",
+      "warning": "⚠ Proche",
+      "over": "Dépassé"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "profile": {
+      "premiumMember": "Membre Premium",
+      "currentStreak": "Série actuelle",
+      "totalDays": "Jours totaux",
+      "transactions": "Transactions"
+    },
+    "sections": {
+      "management": "Gestion",
+      "finance": "Finances",
+      "preferences": "Préférences",
+      "data": "Données",
+      "security": "Sécurité",
+      "about": "À propos"
+    },
+    "items": {
+      "ledger": "Gestionnaire de livre",
+      "accountManager": "Gestionnaire de comptes",
+      "categoryManager": "Gestionnaire de catégories",
+      "shareManager": "Gestionnaire de partage",
+      "budget": "Budget",
+      "savingGoals": "Objectifs d'épargne",
+      "recurring": "Récurrents",
+      "reminders": "Rappels",
+      "currency": "Devise de base",
+      "darkMode": "Mode sombre",
+      "language": "Langue",
+      "export": "Exporter / Importer",
+      "backups": "Sauvegardes",
+      "transferData": "Transférer les données",
+      "appLock": "Verrouillage de l'app",
+      "biometric": "Auth biométrique",
+      "rate": "Évaluer l'application",
+      "faq": "FAQ",
+      "contact": "Nous contacter",
+      "privacyMode": "Mode confidentialité",
+      "billSplit": "Partage de factures",
+      "netWorthTimeline": "Historique du patrimoine",
+      "subscriptionAudit": "Audit des abonnements"
+    },
+    "darkModeValues": {
+      "on": "Activé",
+      "off": "Désactivé",
+      "auto": "Auto"
+    },
+    "backupsInactive": "Inactif"
+  },
+  "addAccount": {
+    "title": "Ajouter un compte",
+    "groups": {
+      "debit": "Débit",
+      "credit": "Crédit",
+      "borrowLend": "Emprunter / Prêter",
+      "invest": "Investir"
+    },
+    "form": {
+      "name": "Nom",
+      "note": "Note",
+      "currency": "Devise",
+      "openingBalance": "Solde d'ouverture",
+      "chartColor": "Couleur du graphique",
+      "countInAsset": "Compter dans les actifs"
+    },
+    "placeholder": {
+      "name": "ex. BNP Paribas",
+      "note": "4 derniers chiffres, mémo..."
+    }
+  },
+  "addTransaction": {
+    "title": "Ajouter une transaction"
+  },
+  "accountDetail": {
+    "transactions": "Transactions",
+    "day": "Jour",
+    "month": "Mois",
+    "noTransactions": "Aucune transaction",
+    "creditLimit": "Limite de crédit: {{limit}} · Disponible: {{available}}"
+  },
+  "goals": {
+    "title": "Objectifs d'épargne",
+    "addGoal": "Ajouter un objectif",
+    "noGoals": "Aucun objectif d'épargne",
+    "target": "Objectif",
+    "saved": "Économisé",
+    "remaining": "{{amount}} restant",
+    "monthlyNeeded": "{{amount}}/mois nécessaires",
+    "completed": "Objectif atteint ! 🎉",
+    "deadline": "Échéance: {{date}}"
+  },
+  "billSplit": {
+    "title": "Partage de factures",
+    "owesYou": "vous doit",
+    "youOwe": "vous devez",
+    "settled": "Soldé",
+    "addEntry": "Ajouter une entrée",
+    "markSettled": "Marquer comme soldé",
+    "noEntries": "Aucune entrée"
+  },
+  "debtPlanner": {
+    "title": "Planificateur de remboursement",
+    "monthsToPayoff": "Mois pour rembourser",
+    "totalInterest": "Intérêts totaux",
+    "payoffDate": "Date de remboursement",
+    "snowball": "Méthode boule de neige",
+    "avalanche": "Méthode avalanche",
+    "monthlyPayment": "Paiement mensuel",
+    "interestRate": "Taux d'intérêt annuel"
+  },
+  "subscriptionAudit": {
+    "title": "Audit des abonnements",
+    "monthlyTotal": "Total mensuel",
+    "yearlyTotal": "Total annuel",
+    "unusedLabel": "Inutilisé",
+    "noSubscriptions": "Aucun abonnement actif"
+  },
+  "netWorthTimeline": {
+    "title": "Historique du patrimoine",
+    "noHistory": "Historique insuffisant. Revenez le mois prochain.",
+    "change": "vs mois dernier"
+  },
+  "currency": {
+    "title": "Devise de base",
+    "refreshRates": "Actualiser les taux en direct",
+    "fetching": "Récupération des taux…",
+    "neverSynced": "Jamais synchronisé",
+    "updated": "Mis à jour le {{date}} · via frankfurter.app (gratuit)"
+  },
+  "language": {
+    "title": "Langue"
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "common": {
+    "save": "I-save",
+    "cancel": "Kanselahin",
+    "edit": "I-edit",
+    "delete": "Burahin",
+    "close": "Isara",
+    "back": "Bumalik",
+    "add": "Magdagdag",
+    "confirm": "Kumpirmahin",
+    "loading": "Naglo-load...",
+    "error": "May nangyaring mali",
+    "retry": "Subukan ulit",
+    "noData": "Wala pang data",
+    "ok": "OK"
+  },
+  "nav": {
+    "home": "Home",
+    "accounts": "Mga Account",
+    "transactions": "Mga Transaksyon",
+    "budget": "Badyet",
+    "settings": "Mga Setting"
+  },
+  "home": {
+    "greeting_morning": "Magandang umaga",
+    "greeting_afternoon": "Magandang hapon",
+    "greeting_evening": "Magandang gabi",
+    "periods": {
+      "today": "Ngayon",
+      "week": "Linggong ito",
+      "month": "Buwang ito",
+      "last": "Nakaraang Buwan"
+    },
+    "expenses": "Mga Gastos",
+    "income": "Kita",
+    "balance": "Balanse",
+    "weeklyDigest": "Buod ng nakaraang linggo",
+    "digestSpent": "Gumastos ka ng {{amount}} noong nakaraang linggo",
+    "digestTopCategory": "Pinaka-mataas: {{category}}",
+    "digestVsLastWeek_more": "↑ {{pct}}% higit sa nakaraang linggo",
+    "digestVsLastWeek_less": "↓ {{pct}}% mas kaunti kaysa nakaraang linggo"
+  },
+  "accounts": {
+    "title": "Mga Account",
+    "netWorth": "Netong Halaga",
+    "assets": "Mga Asset",
+    "liabilities": "Mga Pananagutan",
+    "debit": "Debit",
+    "credit": "Kredito",
+    "investment": "Pamumuhunan",
+    "loan": "Utang",
+    "balance": "Bal.",
+    "addAccount": "Magdagdag ng Account",
+    "noAccounts": "Wala pang account. Pindutin ang + para magdagdag.",
+    "types": {
+      "checking": "Checking",
+      "savings": "Savings",
+      "credit": "Credit Card",
+      "cash": "Cash",
+      "digital": "Digital Wallet",
+      "loan": "Utang",
+      "investment": "Pamumuhunan",
+      "stock": "Stocks",
+      "crypto": "Crypto"
+    }
+  },
+  "transactions": {
+    "title": "Mga Transaksyon",
+    "record": "Talaan",
+    "stats": "Estadistika",
+    "noTransactions": "Wala pang transaksyon",
+    "income": "Kita",
+    "expense": "Gastos",
+    "transfer": "Transfer",
+    "balance": "Balanse",
+    "addTransaction": "Magdagdag ng Transaksyon",
+    "category": "Kategorya",
+    "account": "Account",
+    "note": "Magdagdag ng tala...",
+    "trends": "Mga Trend",
+    "categories": "Mga Kategorya",
+    "overview": "Pangkalahatang-tanaw",
+    "in": "PASOK",
+    "out": "LABAS"
+  },
+  "budget": {
+    "title": "Badyet",
+    "totalSpent": "Kabuuang Gastos",
+    "totalBudget": "Kabuuang Badyet",
+    "remaining": "{{amount}} natitira",
+    "overBy": "Sobra ng {{amount}}",
+    "noBudgets": "Walang badyet para sa buwang ito",
+    "status": {
+      "ok": "OK",
+      "warning": "⚠ Malapit",
+      "over": "Sobra"
+    }
+  },
+  "settings": {
+    "title": "Mga Setting",
+    "profile": {
+      "premiumMember": "Premium Member",
+      "currentStreak": "Kasalukuyang Streak",
+      "totalDays": "Kabuuang Araw",
+      "transactions": "Mga Transaksyon"
+    },
+    "sections": {
+      "management": "Pamamahala",
+      "finance": "Pananalapi",
+      "preferences": "Mga Kagustuhan",
+      "data": "Data",
+      "security": "Seguridad",
+      "about": "Tungkol Sa"
+    },
+    "items": {
+      "ledger": "Ledger Manager",
+      "accountManager": "Account Manager",
+      "categoryManager": "Category Manager",
+      "shareManager": "Share Manager",
+      "budget": "Badyet",
+      "savingGoals": "Mga Layunin sa Pag-iimpok",
+      "recurring": "Paulit-ulit",
+      "reminders": "Mga Paalala",
+      "currency": "Base na Pera",
+      "darkMode": "Dark Mode",
+      "language": "Wika",
+      "export": "Export / Import",
+      "backups": "Mga Backup",
+      "transferData": "I-transfer ang Data",
+      "appLock": "App Lock",
+      "biometric": "Biometric Auth",
+      "rate": "I-rate ang App",
+      "faq": "FAQ",
+      "contact": "Makipag-ugnayan",
+      "privacyMode": "Privacy Mode",
+      "billSplit": "Hatiin ang Bayarin",
+      "netWorthTimeline": "Timeline ng Netong Halaga",
+      "subscriptionAudit": "Subscription Audit"
+    },
+    "darkModeValues": {
+      "on": "Bukas",
+      "off": "Sarado",
+      "auto": "Auto"
+    },
+    "backupsInactive": "Hindi Aktibo"
+  },
+  "addAccount": {
+    "title": "Magdagdag ng Account",
+    "groups": {
+      "debit": "Debit",
+      "credit": "Kredito",
+      "borrowLend": "Utang / Pahiram",
+      "invest": "Pamumuhunan"
+    },
+    "form": {
+      "name": "Pangalan",
+      "note": "Tala",
+      "currency": "Pera",
+      "openingBalance": "Panimulang Balanse",
+      "chartColor": "Kulay ng Chart",
+      "countInAsset": "Isama sa Asset"
+    },
+    "placeholder": {
+      "name": "hal. GoTyme Bank",
+      "note": "Huling 4 na digit, memo..."
+    }
+  },
+  "addTransaction": {
+    "title": "Magdagdag ng Transaksyon"
+  },
+  "accountDetail": {
+    "transactions": "Mga Transaksyon",
+    "day": "Araw",
+    "month": "Buwan",
+    "noTransactions": "Wala pang transaksyon",
+    "creditLimit": "Credit limit: {{limit}} · Available: {{available}}"
+  },
+  "goals": {
+    "title": "Mga Layunin sa Pag-iimpok",
+    "addGoal": "Magdagdag ng Layunin",
+    "noGoals": "Wala pang layunin sa pag-iimpok",
+    "target": "Target",
+    "saved": "Naipon",
+    "remaining": "{{amount}} pa ang kulang",
+    "monthlyNeeded": "{{amount}}/buwan ang kailangan",
+    "completed": "Naabot na ang layunin! 🎉",
+    "deadline": "Deadline: {{date}}"
+  },
+  "billSplit": {
+    "title": "Hatiin ang Bayarin",
+    "owesYou": "may utang sa iyo",
+    "youOwe": "may utang ka",
+    "settled": "Nayos na",
+    "addEntry": "Magdagdag",
+    "markSettled": "Markahan Bilang Nayos",
+    "noEntries": "Wala pang entry"
+  },
+  "debtPlanner": {
+    "title": "Debt Payoff Planner",
+    "monthsToPayoff": "Buwan Hanggang Mabayaran",
+    "totalInterest": "Kabuuang Interes",
+    "payoffDate": "Petsa ng Pagbabayad",
+    "snowball": "Snowball",
+    "avalanche": "Avalanche",
+    "monthlyPayment": "Buwanang Bayad",
+    "interestRate": "Taunang Interes"
+  },
+  "subscriptionAudit": {
+    "title": "Subscription Audit",
+    "monthlyTotal": "Buwanang Kabuuan",
+    "yearlyTotal": "Taunang Kabuuan",
+    "unusedLabel": "Hindi Ginagamit",
+    "noSubscriptions": "Walang aktibong subscription"
+  },
+  "netWorthTimeline": {
+    "title": "Timeline ng Netong Halaga",
+    "noHistory": "Hindi pa sapat ang kasaysayan. Bumalik sa susunod na buwan.",
+    "change": "kumpara noong nakaraang buwan"
+  },
+  "currency": {
+    "title": "Base na Pera",
+    "refreshRates": "I-refresh ang Live Rates",
+    "fetching": "Kinu-kuha ang rates…",
+    "neverSynced": "Hindi pa na-sync",
+    "updated": "Na-update {{date}} · sa pamamagitan ng frankfurter.app (libre)"
+  },
+  "language": {
+    "title": "Wika"
+  }
+}

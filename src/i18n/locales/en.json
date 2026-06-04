@@ -1,0 +1,230 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close",
+    "back": "Back",
+    "add": "Add",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "noData": "No data yet",
+    "ok": "OK"
+  },
+  "nav": {
+    "home": "Home",
+    "accounts": "Accounts",
+    "transactions": "Transactions",
+    "budget": "Budget",
+    "settings": "Settings"
+  },
+  "home": {
+    "greeting_morning": "Good morning",
+    "greeting_afternoon": "Good afternoon",
+    "greeting_evening": "Good evening",
+    "periods": {
+      "today": "Today",
+      "week": "This Week",
+      "month": "This Month",
+      "last": "Last Month"
+    },
+    "expenses": "Expenses",
+    "income": "Income",
+    "balance": "Balance",
+    "weeklyDigest": "Last week summary",
+    "digestSpent": "You spent {{amount}} last week",
+    "digestTopCategory": "Top: {{category}}",
+    "digestVsLastWeek_more": "↑ {{pct}}% more than the week before",
+    "digestVsLastWeek_less": "↓ {{pct}}% less than the week before"
+  },
+  "accounts": {
+    "title": "Accounts",
+    "netWorth": "Net Worth",
+    "assets": "Assets",
+    "liabilities": "Liabilities",
+    "debit": "Debit",
+    "credit": "Credit",
+    "investment": "Investment",
+    "loan": "Loan",
+    "balance": "Bal.",
+    "addAccount": "Add Account",
+    "noAccounts": "No accounts yet. Tap + to add one.",
+    "types": {
+      "checking": "Checking",
+      "savings": "Savings",
+      "credit": "Credit Card",
+      "cash": "Cash",
+      "digital": "Digital Wallet",
+      "loan": "Loan",
+      "investment": "Investment",
+      "stock": "Stocks",
+      "crypto": "Crypto"
+    }
+  },
+  "transactions": {
+    "title": "Transactions",
+    "record": "Record",
+    "stats": "Stats",
+    "noTransactions": "No transactions yet",
+    "income": "Income",
+    "expense": "Expense",
+    "transfer": "Transfer",
+    "balance": "Balance",
+    "addTransaction": "Add Transaction",
+    "category": "Category",
+    "account": "Account",
+    "note": "Add a note...",
+    "trends": "Trends",
+    "categories": "Categories",
+    "overview": "Overview",
+    "in": "IN",
+    "out": "OUT"
+  },
+  "budget": {
+    "title": "Budget",
+    "totalSpent": "Total Spent",
+    "totalBudget": "Total Budget",
+    "remaining": "{{amount}} remaining",
+    "overBy": "Over by {{amount}}",
+    "noBudgets": "No budgets set for this month",
+    "status": {
+      "ok": "OK",
+      "warning": "⚠ Near",
+      "over": "Over"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": {
+      "premiumMember": "Premium Member",
+      "currentStreak": "Current Streak",
+      "totalDays": "Total Days",
+      "transactions": "Transactions"
+    },
+    "sections": {
+      "management": "Management",
+      "finance": "Finance",
+      "preferences": "Preferences",
+      "data": "Data",
+      "security": "Security",
+      "about": "About"
+    },
+    "items": {
+      "ledger": "Ledger Manager",
+      "accountManager": "Account Manager",
+      "categoryManager": "Category Manager",
+      "shareManager": "Share Manager",
+      "budget": "Budget",
+      "savingGoals": "Saving Goals",
+      "recurring": "Recurring",
+      "reminders": "Reminders",
+      "currency": "Base Currency",
+      "darkMode": "Dark Mode",
+      "language": "Language",
+      "export": "Export / Import",
+      "backups": "Backups",
+      "transferData": "Transfer Data",
+      "appLock": "App Lock",
+      "biometric": "Biometric Auth",
+      "rate": "Rate the App",
+      "faq": "FAQ",
+      "contact": "Contact Us",
+      "privacyMode": "Privacy Mode",
+      "billSplit": "Bill Splitting",
+      "netWorthTimeline": "Net Worth Timeline",
+      "subscriptionAudit": "Subscription Audit"
+    },
+    "darkModeValues": {
+      "on": "On",
+      "off": "Off",
+      "auto": "Auto"
+    },
+    "backupsInactive": "Inactive"
+  },
+  "addAccount": {
+    "title": "Add Account",
+    "groups": {
+      "debit": "Debit",
+      "credit": "Credit",
+      "borrowLend": "Borrow / Lend",
+      "invest": "Invest"
+    },
+    "form": {
+      "name": "Name",
+      "note": "Note",
+      "currency": "Currency",
+      "openingBalance": "Opening Balance",
+      "chartColor": "Chart Color",
+      "countInAsset": "Count in Asset"
+    },
+    "placeholder": {
+      "name": "e.g. GoTyme Bank",
+      "note": "Last 4 digits, memo..."
+    }
+  },
+  "addTransaction": {
+    "title": "Add Transaction"
+  },
+  "accountDetail": {
+    "transactions": "Transactions",
+    "day": "Day",
+    "month": "Month",
+    "noTransactions": "No transactions yet",
+    "creditLimit": "Credit limit: {{limit}} · Available: {{available}}"
+  },
+  "goals": {
+    "title": "Savings Goals",
+    "addGoal": "Add Goal",
+    "noGoals": "No savings goals yet",
+    "target": "Target",
+    "saved": "Saved",
+    "remaining": "{{amount}} to go",
+    "monthlyNeeded": "{{amount}}/mo needed",
+    "completed": "Goal reached! 🎉",
+    "deadline": "Deadline: {{date}}"
+  },
+  "billSplit": {
+    "title": "Bill Splitting",
+    "owesYou": "owes you",
+    "youOwe": "you owe",
+    "settled": "Settled",
+    "addEntry": "Add Entry",
+    "markSettled": "Mark Settled",
+    "noEntries": "No entries yet"
+  },
+  "debtPlanner": {
+    "title": "Debt Payoff Planner",
+    "monthsToPayoff": "Months to Payoff",
+    "totalInterest": "Total Interest",
+    "payoffDate": "Payoff Date",
+    "snowball": "Snowball",
+    "avalanche": "Avalanche",
+    "monthlyPayment": "Monthly Payment",
+    "interestRate": "Annual Interest Rate"
+  },
+  "subscriptionAudit": {
+    "title": "Subscription Audit",
+    "monthlyTotal": "Monthly Total",
+    "yearlyTotal": "Yearly Total",
+    "unusedLabel": "Unused",
+    "noSubscriptions": "No active subscriptions"
+  },
+  "netWorthTimeline": {
+    "title": "Net Worth Timeline",
+    "noHistory": "Not enough history yet. Check back next month.",
+    "change": "vs last month"
+  },
+  "currency": {
+    "title": "Base Currency",
+    "refreshRates": "Refresh Live Rates",
+    "fetching": "Fetching rates…",
+    "neverSynced": "Never synced",
+    "updated": "Updated {{date}} · via frankfurter.app (free)"
+  },
+  "language": {
+    "title": "Language"
+  }
+}

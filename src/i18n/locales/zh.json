@@ -1,0 +1,230 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "edit": "编辑",
+    "delete": "删除",
+    "close": "关闭",
+    "back": "返回",
+    "add": "添加",
+    "confirm": "确认",
+    "loading": "加载中...",
+    "error": "出现错误",
+    "retry": "重试",
+    "noData": "暂无数据",
+    "ok": "确定"
+  },
+  "nav": {
+    "home": "首页",
+    "accounts": "账户",
+    "transactions": "交易",
+    "budget": "预算",
+    "settings": "设置"
+  },
+  "home": {
+    "greeting_morning": "早上好",
+    "greeting_afternoon": "下午好",
+    "greeting_evening": "晚上好",
+    "periods": {
+      "today": "今天",
+      "week": "本周",
+      "month": "本月",
+      "last": "上月"
+    },
+    "expenses": "支出",
+    "income": "收入",
+    "balance": "余额",
+    "weeklyDigest": "上周摘要",
+    "digestSpent": "上周您花费了 {{amount}}",
+    "digestTopCategory": "最多: {{category}}",
+    "digestVsLastWeek_more": "↑ 比前一周多 {{pct}}%",
+    "digestVsLastWeek_less": "↓ 比前一周少 {{pct}}%"
+  },
+  "accounts": {
+    "title": "账户",
+    "netWorth": "净资产",
+    "assets": "资产",
+    "liabilities": "负债",
+    "debit": "借记",
+    "credit": "信用",
+    "investment": "投资",
+    "loan": "贷款",
+    "balance": "余额",
+    "addAccount": "添加账户",
+    "noAccounts": "暂无账户。点击 + 添加一个。",
+    "types": {
+      "checking": "活期账户",
+      "savings": "储蓄账户",
+      "credit": "信用卡",
+      "cash": "现金",
+      "digital": "数字钱包",
+      "loan": "贷款",
+      "investment": "投资",
+      "stock": "股票",
+      "crypto": "加密货币"
+    }
+  },
+  "transactions": {
+    "title": "交易",
+    "record": "记录",
+    "stats": "统计",
+    "noTransactions": "暂无交易",
+    "income": "收入",
+    "expense": "支出",
+    "transfer": "转账",
+    "balance": "余额",
+    "addTransaction": "添加交易",
+    "category": "类别",
+    "account": "账户",
+    "note": "添加备注...",
+    "trends": "趋势",
+    "categories": "类别",
+    "overview": "概览",
+    "in": "收入",
+    "out": "支出"
+  },
+  "budget": {
+    "title": "预算",
+    "totalSpent": "总支出",
+    "totalBudget": "总预算",
+    "remaining": "剩余 {{amount}}",
+    "overBy": "超出 {{amount}}",
+    "noBudgets": "本月未设置预算",
+    "status": {
+      "ok": "正常",
+      "warning": "⚠ 接近",
+      "over": "超出"
+    }
+  },
+  "settings": {
+    "title": "设置",
+    "profile": {
+      "premiumMember": "高级会员",
+      "currentStreak": "当前连续天数",
+      "totalDays": "总天数",
+      "transactions": "交易"
+    },
+    "sections": {
+      "management": "管理",
+      "finance": "财务",
+      "preferences": "偏好",
+      "data": "数据",
+      "security": "安全",
+      "about": "关于"
+    },
+    "items": {
+      "ledger": "账本管理",
+      "accountManager": "账户管理",
+      "categoryManager": "类别管理",
+      "shareManager": "分享管理",
+      "budget": "预算",
+      "savingGoals": "储蓄目标",
+      "recurring": "定期项目",
+      "reminders": "提醒",
+      "currency": "基础货币",
+      "darkMode": "深色模式",
+      "language": "语言",
+      "export": "导出 / 导入",
+      "backups": "备份",
+      "transferData": "数据迁移",
+      "appLock": "应用锁",
+      "biometric": "生物识别",
+      "rate": "评价应用",
+      "faq": "常见问题",
+      "contact": "联系我们",
+      "privacyMode": "隐私模式",
+      "billSplit": "账单分摊",
+      "netWorthTimeline": "净资产历史",
+      "subscriptionAudit": "订阅管理"
+    },
+    "darkModeValues": {
+      "on": "开启",
+      "off": "关闭",
+      "auto": "自动"
+    },
+    "backupsInactive": "未激活"
+  },
+  "addAccount": {
+    "title": "添加账户",
+    "groups": {
+      "debit": "借记",
+      "credit": "信用",
+      "borrowLend": "借贷",
+      "invest": "投资"
+    },
+    "form": {
+      "name": "名称",
+      "note": "备注",
+      "currency": "货币",
+      "openingBalance": "期初余额",
+      "chartColor": "图表颜色",
+      "countInAsset": "计入资产"
+    },
+    "placeholder": {
+      "name": "例如: 工商银行",
+      "note": "后四位、备注..."
+    }
+  },
+  "addTransaction": {
+    "title": "添加交易"
+  },
+  "accountDetail": {
+    "transactions": "交易",
+    "day": "日",
+    "month": "月",
+    "noTransactions": "暂无交易",
+    "creditLimit": "信用额度: {{limit}} · 可用: {{available}}"
+  },
+  "goals": {
+    "title": "储蓄目标",
+    "addGoal": "添加目标",
+    "noGoals": "暂无储蓄目标",
+    "target": "目标",
+    "saved": "已存",
+    "remaining": "还差 {{amount}}",
+    "monthlyNeeded": "每月需 {{amount}}",
+    "completed": "目标达成！ 🎉",
+    "deadline": "截止日期: {{date}}"
+  },
+  "billSplit": {
+    "title": "账单分摊",
+    "owesYou": "欠你",
+    "youOwe": "你欠",
+    "settled": "已结清",
+    "addEntry": "添加条目",
+    "markSettled": "标记为已结清",
+    "noEntries": "暂无条目"
+  },
+  "debtPlanner": {
+    "title": "还款规划",
+    "monthsToPayoff": "还清所需月数",
+    "totalInterest": "总利息",
+    "payoffDate": "还清日期",
+    "snowball": "滚雪球法",
+    "avalanche": "雪崩法",
+    "monthlyPayment": "月还款额",
+    "interestRate": "年利率"
+  },
+  "subscriptionAudit": {
+    "title": "订阅管理",
+    "monthlyTotal": "月度合计",
+    "yearlyTotal": "年度合计",
+    "unusedLabel": "未使用",
+    "noSubscriptions": "暂无有效订阅"
+  },
+  "netWorthTimeline": {
+    "title": "净资产历史",
+    "noHistory": "历史记录不足。下个月再来查看。",
+    "change": "与上月对比"
+  },
+  "currency": {
+    "title": "基础货币",
+    "refreshRates": "刷新实时汇率",
+    "fetching": "正在获取汇率…",
+    "neverSynced": "从未同步",
+    "updated": "{{date}} 更新 · 通过 frankfurter.app（免费）"
+  },
+  "language": {
+    "title": "语言"
+  }
+}
